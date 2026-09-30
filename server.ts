@@ -2273,12 +2273,14 @@ Genera un reporte clínico, recetas maestras y guía de compra para la familia e
 // Start server with Vite middleware in development or static in production
 async function start() {
   const legacySitePath = path.join(process.cwd(), 'public', 'sitio');
-  app.use('/sitio', express.static(legacySitePath, {
+  const legacySiteOptions = {
     maxAge: '1d',
     etag: true,
-  }));
+  };
+  app.use('/sitio', express.static(legacySitePath, legacySiteOptions));
 
   if (process.env.NODE_ENV !== 'production') {
+    app.use('/', express.static(legacySitePath, legacySiteOptions));
     const vite = await createViteServer({
       server: {
         middlewareMode: true,
@@ -2289,13 +2291,14 @@ async function start() {
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), 'dist');
-    app.use(express.static(distPath, {
+    app.use('/ia-ayudante', express.static(distPath, {
       maxAge: '1d',
       etag: true,
     }));
-    app.get('*', (req, res) => {
+    app.get(['/ia-ayudante', '/ia-ayudante/*'], (req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
     });
+    app.use('/', express.static(legacySitePath, legacySiteOptions));
   }
 
   app.listen(PORT, '0.0.0.0', () => {

@@ -10,7 +10,7 @@ Requiere Node.js y npm.
 2. Instala dependencias con `npm install`.
 3. Copia `.env.example` a `.env` y configura `GEMINI_API_KEY` para habilitar las respuestas con Gemini.
 4. Inicia con `npm run dev`.
-5. Abre `http://localhost:3000/sitio/` para el sitio original. El enlace “IA Ayudante” abre AmigosU en `http://localhost:3000/`.
+5. Abre `http://localhost:3000/` para la página principal de Amigos Unidos. El enlace “IA Ayudante” abre AmigosU en `http://localhost:3000/ia-ayudante/`.
 
 Para preparar el servidor de producción, ejecuta `npm run build` y después `npm start`. La aplicación escucha en el puerto 3000.
 
