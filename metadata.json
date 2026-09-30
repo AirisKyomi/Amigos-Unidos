@@ -1,0 +1,6 @@
+{
+  "name": "Amigos Unidos - Pediatría IA & Estimulación Infantil",
+  "description": "Plataforma pediátrica integral con Froggi para embarazo, padres primerizos y niños de 0 a 10+ años. Incluye optimizador con algoritmos genéticos y heurísticos, IA pediátrica Gemini 3.6 Flash basada en OMS, AAP y ACOG, lectura de respuestas por audio con voz natural, triaje dermatológico en vivo, análisis acústico de llanto, percentiles antropométricos y cuidados prenatales.",
+  "requestFramePermissions": ["microphone", "camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

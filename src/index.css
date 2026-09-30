@@ -1,0 +1,233 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #090d16;
+    background-color: #fefdf9;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-rounded {
+    font-family: 'Fredoka', 'Comfortaa', 'Quicksand', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, cursive, sans-serif;
+    letter-spacing: -0.01em;
+    color: #020617;
+  }
+
+  /* High contrast rules ensuring text is crisp, legible and dark */
+  .dark {
+    color-scheme: dark;
+  }
+
+  .theme-dark {
+    color: #f8fafc;
+    background-color: #020617;
+  }
+
+  .theme-dark h1, .theme-dark h2, .theme-dark h3, .theme-dark h4 {
+    color: #ffffff !important;
+  }
+
+  /* Accessible text contrast defaults */
+  p, span, li, button, input {
+    text-rendering: optimizeLegibility;
+  }
+}
+
+.font-rounded {
+  font-family: 'Fredoka', 'Comfortaa', 'Quicksand', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, cursive, sans-serif;
+}
+
+/* ========================================================================= */
+/* ENFORCEMENT: "HAZ LAS LETRAS OSCURAS CON TEMAS CLAROS"                    */
+/* Guarantees dark, high-contrast, perfectly readable typography on all      */
+/* light themes (pastel yellow, emerald, ocean, rose, lavender, sunset).      */
+/* ========================================================================= */
+
+/* 1. Light Mode Typography & Color Hierarchy */
+:root:not(.dark),
+body:not(.dark),
+.theme-light-mode,
+.theme-pastel-yellow,
+.theme-emerald,
+.theme-ocean,
+.theme-rose,
+.theme-lavender,
+.theme-sunset {
+  color: #090d16;
+}
+
+/* Headings in light themes: Crisp, deep, readable */
+:root:not(.dark) h1:not([class*="text-white"]),
+:root:not(.dark) h2:not([class*="text-white"]),
+:root:not(.dark) h3:not([class*="text-white"]),
+:root:not(.dark) h4:not([class*="text-white"]),
+:root:not(.dark) h5:not([class*="text-white"]),
+:root:not(.dark) h6:not([class*="text-white"]),
+.theme-light-mode h1:not([class*="text-white"]),
+.theme-light-mode h2:not([class*="text-white"]),
+.theme-light-mode h3:not([class*="text-white"]),
+.theme-light-mode h4:not([class*="text-white"]) {
+  color: #020617;
+  font-weight: 800;
+}
+
+/* Turn washed-out slate-400 into readable dark slate in light mode */
+:root:not(.dark) .text-slate-400:not([class*="bg-slate-9"]):not([class*="bg-cyan-9"]):not([class*="bg-teal-"]):not([class*="text-white"]),
+.theme-light-mode .text-slate-400:not([class*="bg-slate-9"]):not([class*="bg-cyan-9"]):not([class*="bg-teal-"]):not([class*="text-white"]) {
+  color: #334155 !important;
+  font-weight: 500;
+}
+
+/* Turn slate-500 into dark readable slate in light mode */
+:root:not(.dark) .text-slate-500:not([class*="bg-slate-9"]):not([class*="bg-cyan-9"]):not([class*="bg-teal-"]):not([class*="text-white"]),
+.theme-light-mode .text-slate-500:not([class*="bg-slate-9"]):not([class*="bg-cyan-9"]):not([class*="bg-teal-"]):not([class*="text-white"]) {
+  color: #1e293b !important;
+  font-weight: 600;
+}
+
+/* Turn slate-600 into strong dark slate in light mode */
+:root:not(.dark) .text-slate-600:not([class*="bg-slate-9"]):not([class*="bg-cyan-9"]):not([class*="bg-teal-"]):not([class*="text-white"]),
+.theme-light-mode .text-slate-600:not([class*="bg-slate-9"]):not([class*="bg-cyan-9"]):not([class*="bg-teal-"]):not([class*="text-white"]) {
+  color: #0f172a !important;
+  font-weight: 600;
+}
+
+/* Reinforce slate-700 / slate-800 / slate-900 to high contrast */
+:root:not(.dark) .text-slate-700,
+.theme-light-mode .text-slate-700 {
+  color: #0f172a !important;
+}
+
+:root:not(.dark) .text-slate-800,
+.theme-light-mode .text-slate-800 {
+  color: #090d16 !important;
+}
+
+:root:not(.dark) .text-slate-900,
+.theme-light-mode .text-slate-900 {
+  color: #020617 !important;
+}
+
+/* Labels and input fields in light themes */
+:root:not(.dark) label,
+.theme-light-mode label {
+  color: #090d16 !important;
+  font-weight: 700;
+}
+
+:root:not(.dark) input:not([type="checkbox"]):not([type="radio"]),
+:root:not(.dark) textarea,
+:root:not(.dark) select,
+.theme-light-mode input:not([type="checkbox"]):not([type="radio"]),
+.theme-light-mode textarea,
+.theme-light-mode select {
+  color: #020617 !important;
+  font-weight: 600;
+}
+
+:root:not(.dark) input::placeholder,
+:root:not(.dark) textarea::placeholder,
+.theme-light-mode input::placeholder,
+.theme-light-mode textarea::placeholder {
+  color: #475569 !important;
+  font-weight: 500;
+}
+
+/* ========================================================================= */
+/* PRESERVE WHITE TEXT ON INTENTIONAL DARK BANNERS & COLORED BUTTONS         */
+/* ========================================================================= */
+.text-white,
+[class*="text-white"],
+button.text-white {
+  color: #ffffff !important;
+}
+
+:is(.bg-slate-900, .bg-slate-950, .bg-teal-800, .bg-teal-900, .bg-cyan-900, .bg-emerald-900, .bg-emerald-800, .bg-emerald-950, [class*="from-teal-"], [class*="from-cyan-"], [class*="from-emerald-"], [class*="from-sky-9"], [class*="from-rose-9"], [class*="from-purple-9"], [class*="from-slate-9"]) :is(h1, h2, h3, h4, .text-white) {
+  color: #ffffff !important;
+}
+
+:is(.bg-slate-900, .bg-slate-950, .bg-teal-800, .bg-teal-900, .bg-cyan-900, .bg-emerald-900) .text-slate-400 {
+  color: #94a3b8 !important;
+}
+
+:is(.bg-slate-900, .bg-slate-950, .bg-teal-800, .bg-teal-900, .bg-cyan-900, .bg-emerald-900) .text-slate-300 {
+  color: #cbd5e1 !important;
+}
+
+:is(.bg-slate-900, .bg-slate-950, .bg-teal-800, .bg-teal-900, .bg-cyan-900, .bg-emerald-900) .text-slate-200 {
+  color: #e2e8f0 !important;
+}
+
+/* ========================================================================= */
+/* DARK MODE PRESERVATION                                                    */
+/* ========================================================================= */
+.dark .bg-slate-950,
+.dark .bg-slate-900 {
+  color: #f1f5f9;
+}
+
+.dark .bg-slate-900 h1,
+.dark .bg-slate-900 h2,
+.dark .bg-slate-900 h3,
+.dark .bg-slate-900 h4,
+.dark .bg-slate-950 h1,
+.dark .bg-slate-950 h2,
+.dark .bg-slate-950 h3,
+.dark .bg-slate-950 h4 {
+  color: #ffffff !important;
+}
+
+.dark .bg-slate-900 .text-slate-500,
+.dark .bg-slate-950 .text-slate-500,
+.dark .bg-slate-900 .text-slate-600,
+.dark .bg-slate-950 .text-slate-600 {
+  color: #94a3b8 !important;
+}
+
+.dark .bg-slate-900 .text-slate-800,
+.dark .bg-slate-950 .text-slate-800,
+.dark .bg-slate-900 .text-slate-900,
+.dark .bg-slate-950 .text-slate-900,
+.dark .bg-slate-900 .text-slate-950,
+.dark .bg-slate-950 .text-slate-950 {
+  color: #e2e8f0 !important;
+}
+
+.dark input:not([type="checkbox"]):not([type="radio"]),
+.dark textarea,
+.dark select {
+  background-color: #0f172a;
+  color: #f8fafc;
+  border-color: #334155;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #64748b;
+}
+
+/* Theme accent legibility adjustments */
+.theme-emerald {
+  --primary-accent: #059669;
+}
+
+.theme-ocean {
+  --primary-accent: #0284c7;
+}
+
+.theme-rose {
+  --primary-accent: #e11d48;
+}
+
+.theme-lavender {
+  --primary-accent: #7c3aed;
+}
+
+.theme-sunset {
+  --primary-accent: #d97706;
+}
+
+input, textarea, select {
+  font-family: inherit;
+}
+

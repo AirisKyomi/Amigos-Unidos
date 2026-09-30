@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Música Infantil | Amigos Unidos</title>
+
+    <link href="assets/img/Logo2.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+    <link href="assets/css/main.css" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8f3ff 0%, #fff5f5 100%);
+            color: #2d2d2d;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .music-container {
+            max-width: 800px;
+            margin: 100px auto 40px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .header .subtitle {
+            color: #888;
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+
+        .playlist {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .playlist-header {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .playlist-cover {
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .playlist-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .playlist-info {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .track-list {
+            padding: 0;
+        }
+
+        .track {
+            display: flex;
+            align-items: center;
+            padding: 16px 24px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .track:hover {
+            background: #fafafa;
+        }
+
+        .track:last-child {
+            border-bottom: none;
+        }
+
+        .track.playing {
+            background: linear-gradient(
+                90deg,
+                rgba(255, 154, 158, 0.1) 0%,
+                rgba(254, 207, 239, 0.1) 100%
+            );
+        }
+
+        .track.playing .track-number {
+            color: #ff6b6b;
+        }
+
+        .track-number {
+            width: 20px;
+            font-size: 0.9rem;
+            color: #999;
+            font-weight: 500;
+            text-align: center;
+            margin-right: 20px;
+        }
+
+        .track-cover {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+            margin-right: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .track-cover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transition: left 0.6s;
+        }
+
+        .track.playing .track-cover::before {
+            left: 100%;
+        }
+
+        .track-info {
+            flex: 1;
+            margin-right: 16px;
+        }
+
+        .track-name {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .track-artist {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .track-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .play-button {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background: #ff6b6b;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+        }
+
+        .play-button:hover {
+            background: #ff5252;
+            transform: scale(1.05);
+        }
+
+        .track-duration {
+            font-size: 0.85rem;
+            color: #999;
+            min-width: 40px;
+            text-align: right;
+        }
+
+        .audio-element {
+            display: none;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: #f0f0f0;
+            border-radius: 2px;
+            margin: 8px 24px 0;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #ff9a9e);
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        .current-track-info {
+            display: none;
+            padding: 20px 24px;
+            background: #fafafa;
+            border-top: 1px solid #f0f0f0;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .current-track-info.show {
+            display: flex;
+        }
+
+        .current-cover {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: white;
+        }
+
+        .current-info {
+            flex: 1;
+        }
+
+        .current-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .current-artist {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .main-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .main-play-button {
+            width: 48px;
+            height: 48px;
+            border: none;
+            border-radius: 50%;
+            background: #ff6b6b;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .main-play-button:hover {
+            background: #ff5252;
+            transform: scale(1.05);
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .volume-slider {
+            width: 80px;
+            height: 4px;
+            border-radius: 2px;
+            background: #e0e0e0;
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #ff6b6b;
+            cursor: pointer;
+        }
+
+        .time-info {
+            display: flex;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .track.playing .track-number::after {
+            content: '♪';
+            animation: pulse 1.5s infinite;
+            color: #ff6b6b;
+        }
+
+        @media (max-width: 768px) {
+            .music-container {
+                padding: 20px;
+                margin-top: 80px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .track {
+                padding: 12px;
+            }
+
+            .track-number {
+                margin-right: 10px;
+            }
+
+            .track-cover {
+                margin-right: 10px;
+            }
+
+            .track-duration {
+                display: none;
+            }
+
+            .current-track-info {
+                flex-wrap: wrap;
+            }
+
+            .main-controls {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body class="services-page">
+
+<header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+        <a href="index.html" class="logo d-flex align-items-center">
+            <img src="assets/img/Logo2.png" alt="Logo Amigos Unidos" style="max-height: 50px;">
+        </a>
+
+        <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+        <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="/">IA Ayudante</a></li>
+                <li><a href="about.html">Nosotros</a></li>
+                <li><a href="Amigos-mas.html">Amigos+</a></li>
+                <li><a href="pricing.html">Precios</a></li>
+            </ul>
+        </nav>
+
+    </div>
+</header>
+
+<main class="main">
+
+    <div class="music-container">
+
+        <div class="header">
+            <h1>Mi Música 🎵</h1>
+            <p class="subtitle">Canciones especiales para pequeños corazones</p>
+        </div>
+
+        <div class="playlist">
+
+            <div class="playlist-header">
+                <div class="playlist-cover">🎵</div>
+                <h2 class="playlist-title">Playlist Infantil</h2>
+                <p class="playlist-info">4 canciones • Creado para ti</p>
+            </div>
+
+            <div class="track-list">
+
+                <div class="track" data-track="0">
+                    <span class="track-number">1</span>
+
+                    <div class="track-cover">🌟</div>
+
+                    <div class="track-info">
+                        <div class="track-name">Estrellitas Brillantes</div>
+                        <div class="track-artist">Canciones Infantiles</div>
+                    </div>
+
+                    <div class="track-controls">
+                        <button class="play-button" onclick="playTrack(0)">▶</button>
+                        <span class="track-duration">2:34</span>
+                    </div>
+
+                    <audio class="audio-element">
+                        <source src="ruta/a/tu/cancion1.mp4" type="audio/mp4">
+                        <source src="ruta/a/tu/cancion1.mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+
+                <div class="track" data-track="1">
+                    <span class="track-number">2</span>
+
+                    <div class="track-cover">🌈</div>
+
+                    <div class="track-info">
+                        <div class="track-name">Arco Iris Mágico</div>
+                        <div class="track-artist">Melodías Dulces</div>
+                    </div>
+
+                    <div class="track-controls">
+                        <button class="play-button" onclick="playTrack(1)">▶</button>
+                        <span class="track-duration">3:12</span>
+                    </div>
+
+                    <audio class="audio-element">
+                        <source src="ruta/a/tu/cancion2.mp4" type="audio/mp4">
+                        <source src="ruta/a/tu/cancion2.mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+
+                <div class="track" data-track="2">
+                    <span class="track-number">3</span>
+
+                    <div class="track-cover">🦋</div>
+
+                    <div class="track-info">
+                        <div class="track-name">Mariposas Danzantes</div>
+                        <div class="track-artist">Sonidos de la Naturaleza</div>
+                    </div>
+
+                    <div class="track-controls">
+                        <button class="play-button" onclick="playTrack(2)">▶</button>
+                        <span class="track-duration">2:56</span>
+                    </div>
+
+                    <audio class="audio-element">
+                        <source src="ruta/a/tu/cancion3.mp4" type="audio/mp4">
+                        <source src="ruta/a/tu/cancion3.mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+
+                <div class="track" data-track="3">
+                    <span class="track-number">4</span>
+
+                    <div class="track-cover">🌙</div>
+
+                    <div class="track-info">
+                        <div class="track-name">Nana de Luna</div>
+                        <div class="track-artist">Música para Dormir</div>
+                    </div>
+
+                    <div class="track-controls">
+                        <button class="play-button" onclick="playTrack(3)">▶</button>
+                        <span class="track-duration">4:01</span>
+                    </div>
+
+                    <audio class="audio-element">
+                        <source src="ruta/a/tu/cancion4.mp4" type="audio/mp4">
+                        <source src="ruta/a/tu/cancion4.mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+
+            </div>
+
+            <div class="progress-bar" onclick="setProgress(event)">
+                <div class="progress-fill"></div>
+            </div>
+
+            <div class="current-track-info" id="currentTrackInfo">
+
+                <div class="current-cover">🎵</div>
+
+                <div class="current-info">
+                    <div class="current-name">Selecciona una canción</div>
+                    <div class="current-artist">para comenzar a escuchar</div>
+                </div>
+
+                <div class="main-controls">
+
+                    <div class="time-info">
+                        <span id="currentTime">0:00</span>
+                        <span>/</span>
+                        <span id="totalTime">0:00</span>
+                    </div>
+
+                    <button class="main-play-button" id="mainPlayButton" onclick="toggleCurrentTrack()">
+                        ▶
+                    </button>
+
+                    <div class="volume-control">
+                        <span>🔊</span>
+                        <input
+                            type="range"
+                            class="volume-slider"
+                            min="0"
+                            max="1"
+                            step="0.1"
+                            value="0.7"
+                            onchange="setVolume(this.value)"
+                        >
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+<footer id="footer" class="footer">
+
+    <div class="container">
+
+        <div class="row gy-4">
+
+            <div class="col-lg-5 col-md-12 footer-info">
+
+                <a href="index.html" class="logo d-flex align-items-center">
+                    <span>Amigos Unidos</span>
+                </a>
+
+                <p>
+                    ¿Tienes preguntas, ideas o sugerencias?
+                    ¡Nos encantará leerte! Escríbenos y te responderemos lo más pronto posible.
+                </p>
+
+                <div class="social-links d-flex mt-4">
+                    <a href="#" class="twitter">
+                        <i class="bi bi-twitter"></i>
+                    </a>
+
+                    <a href="#" class="facebook">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+
+                    <a href="#" class="instagram">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="col-lg-2 col-6 footer-links">
+
+                <h4>Enlaces útiles</h4>
+
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="about.html">Sobre nosotros</a></li>
+                    <li><a href="Amigos-mas.html">Amigos+</a></li>
+                    <li><a href="pricing.html">Precios</a></li>
+                    <li><a href="/">IA Ayudante</a></li>
+                </ul>
+
+            </div>
+
+            <div class="col-lg-2 col-6 footer-links">
+
+                <h4>Contenido</h4>
+
+                <ul>
+                    <li><a href="disco.html">La Disco</a></li>
+                    <li><a href="actividades.html">Actividades</a></li>
+                    <li><a href="videos.html">Videos</a></li>
+                    <li><a href="prejardin.html">Pre-Jardín y Jardín</a></li>
+                    <li><a href="transicion.html">Transición</a></li>
+                </ul>
+
+            </div>
+
+            <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+
+                <h4>Contáctanos</h4>
+
+                <p>
+                    <strong>Teléfono:</strong> +57 314 643 6514<br>
+                    <strong>Email:</strong> amigosunidos164@gmail.com
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="container mt-4">
+
+        <div class="copyright">
+            &copy; Copyright
+            <strong><span>Amigos Unidos</span></strong>.
+            Todos los derechos reservados.
+        </div>
+
+    </div>
+
+</footer>
+
+<a
+    href="#"
+    id="scroll-top"
+    class="scroll-top d-flex align-items-center justify-content-center"
+>
+    <i class="bi bi-arrow-up-short"></i>
+</a>
+
+<div id="preloader"></div>
+
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/php-email-form/validate.js"></script>
+<script src="assets/vendor/aos/aos.js"></script>
+<script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+<script src="assets/js/main.js"></script>
+
+<script>
+    let currentTrack = null;
+    let currentAudio = null;
+    let isPlaying = false;
+
+    function playTrack(trackIndex) {
+        const track = document.querySelector(`[data-track="${trackIndex}"]`);
+        const audio = track.querySelector('audio');
+
+        if (currentAudio && currentAudio !== audio) {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+
+            document.querySelector('.track.playing')?.classList.remove('playing');
+
+            document.querySelectorAll('.play-button').forEach(button => {
+                button.textContent = '▶';
+            });
+        }
+
+        currentTrack = trackIndex;
+        currentAudio = audio;
+
+        if (audio.paused) {
+            audio.play();
+
+            track.classList.add('playing');
+            track.querySelector('.play-button').textContent = '⏸';
+            document.getElementById('mainPlayButton').textContent = '⏸';
+
+            isPlaying = true;
+
+            updateCurrentTrackInfo(track);
+            document.getElementById('currentTrackInfo').classList.add('show');
+        } else {
+            audio.pause();
+
+            track.classList.remove('playing');
+            track.querySelector('.play-button').textContent = '▶';
+            document.getElementById('mainPlayButton').textContent = '▶';
+
+            isPlaying = false;
+        }
+
+        audio.removeEventListener('timeupdate', updateProgress);
+        audio.addEventListener('timeupdate', updateProgress);
+
+        audio.onended = function () {
+            track.classList.remove('playing');
+            track.querySelector('.play-button').textContent = '▶';
+            document.getElementById('mainPlayButton').textContent = '▶';
+
+            isPlaying = false;
+        };
+    }
+
+    function toggleCurrentTrack() {
+        if (!currentAudio) {
+            return;
+        }
+
+        const currentTrackElement = document.querySelector(
+            `[data-track="${currentTrack}"]`
+        );
+
+        if (isPlaying) {
+            currentAudio.pause();
+
+            currentTrackElement.classList.remove('playing');
+            currentTrackElement.querySelector('.play-button').textContent = '▶';
+            document.getElementById('mainPlayButton').textContent = '▶';
+
+            isPlaying = false;
+        } else {
+            currentAudio.play();
+
+            currentTrackElement.classList.add('playing');
+            currentTrackElement.querySelector('.play-button').textContent = '⏸';
+            document.getElementById('mainPlayButton').textContent = '⏸';
+
+            isPlaying = true;
+        }
+    }
+
+    function updateCurrentTrackInfo(track) {
+        const name = track.querySelector('.track-name').textContent;
+        const artist = track.querySelector('.track-artist').textContent;
+        const cover = track.querySelector('.track-cover').textContent;
+
+        document.querySelector('.current-name').textContent = name;
+        document.querySelector('.current-artist').textContent = artist;
+        document.querySelector('.current-cover').textContent = cover;
+    }
+
+    function updateProgress() {
+        if (!currentAudio || !currentAudio.duration) {
+            return;
+        }
+
+        const progress = (currentAudio.currentTime / currentAudio.duration) * 100;
+
+        document.querySelector('.progress-fill').style.width = progress + '%';
+
+        document.getElementById('currentTime').textContent =
+            formatTime(currentAudio.currentTime);
+
+        document.getElementById('totalTime').textContent =
+            formatTime(currentAudio.duration);
+    }
+
+    function setProgress(event) {
+        if (!currentAudio || !currentAudio.duration) {
+            return;
+        }
+
+        const progressBar = event.currentTarget;
+        const rect = progressBar.getBoundingClientRect();
+        const clickX = event.clientX - rect.left;
+        const width = rect.width;
+
+        currentAudio.currentTime =
+            (clickX / width) * currentAudio.duration;
+    }
+
+    function setVolume(volume) {
+        if (currentAudio) {
+            currentAudio.volume = volume;
+        }
+    }
+
+    function formatTime(seconds) {
+        if (isNaN(seconds)) {
+            return '0:00';
+        }
+
+        const minutes = Math.floor(seconds / 60);
+        const secondsFormatted = Math.floor(seconds % 60);
+
+        return minutes + ':' +
+            (secondsFormatted < 10 ? '0' : '') +
+            secondsFormatted;
+    }
+
+    document.querySelectorAll('.track').forEach(track => {
+
+        track.addEventListener('click', event => {
+
+            if (event.target.closest('.play-button')) {
+                return;
+            }
+
+            const trackIndex = parseInt(track.dataset.track);
+
+            playTrack(trackIndex);
+        });
+
+    });
+</script>
+
+</body>
+</html>
