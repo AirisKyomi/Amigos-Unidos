@@ -583,10 +583,10 @@ section {
 .home-brand-hero img {
   display: block;
   width: 100%;
-  max-width: 1275px;
-  height: auto;
+  height: clamp(220px, 43vw, 640px);
   margin: 0 auto;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center;
 }
 
 #main > .about {
