@@ -17,7 +17,8 @@ import {
   Sparkles,
   Baby,
   Check,
-  Clock
+  Clock,
+  Home
 } from 'lucide-react';
 
 export interface NavDrawerItem {
@@ -108,7 +109,7 @@ export const UnifiedHeader: React.FC<UnifiedHeaderProps> = ({
               </div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-2">
-                  <span className="font-rounded font-bold text-lg sm:text-xl tracking-tight text-amber-950">
+                  <span className="font-rounded font-bold text-lg sm:text-xl tracking-tight text-amber-950 max-[380px]:hidden">
                     Amigos Unidos
                   </span>
                   <span className="hidden md:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide bg-amber-100 text-amber-900 border border-amber-300">
@@ -173,6 +174,15 @@ export const UnifiedHeader: React.FC<UnifiedHeaderProps> = ({
                 </p>
               </div>
             </button>
+
+            <a
+              href="/"
+              className="w-10 h-10 inline-flex shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-900 border border-amber-200 transition-colors hover:bg-amber-100"
+              aria-label="Volver al inicio de Amigos Unidos"
+              title="Volver al inicio"
+            >
+              <Home className="w-5 h-5" aria-hidden="true" />
+            </a>
           </div>
         </div>
       </header>

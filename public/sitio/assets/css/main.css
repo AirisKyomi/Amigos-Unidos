@@ -2007,6 +2007,7 @@ img {
 
 .hero {
   min-height: min(760px, 100svh);
+  box-sizing: border-box;
   padding: 120px 0 64px;
   background-position: center;
 }
@@ -2098,8 +2099,8 @@ img {
 
 @media (max-width: 767px) {
   .hero {
-    min-height: 620px;
-    padding: 112px 0 40px;
+    min-height: min(620px, 100svh);
+    padding: 88px 0 32px;
   }
 
   .hero-img img {
