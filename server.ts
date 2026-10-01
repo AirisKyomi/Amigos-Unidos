@@ -764,13 +764,13 @@ app.get('/api/health', (req, res) => {
 // -------------------------------------------------------------
 // SECURE AUTHENTICATION & HASHED DATABASE ENDPOINTS (COST: $0)
 // -------------------------------------------------------------
-app.post('/api/auth/login', (req, res) => {
+app.post('/api/auth/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
       return res.status(400).json({ success: false, error: 'Correo y contraseña requeridos.' });
     }
-    const result = authDatabase.authenticate(email, password);
+    const result = await authDatabase.authenticate(email, password);
     if (!result.success) {
       return res.status(401).json(result);
     }
@@ -781,13 +781,13 @@ app.post('/api/auth/login', (req, res) => {
   }
 });
 
-app.post('/api/auth/register', (req, res) => {
+app.post('/api/auth/register', async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
     if (!name || !email || !password) {
       return res.status(400).json({ success: false, error: 'Todos los campos son obligatorios.' });
     }
-    const result = authDatabase.registerUser({
+    const result = await authDatabase.registerUser({
       name,
       email,
       passwordPlain: password,
@@ -803,13 +803,13 @@ app.post('/api/auth/register', (req, res) => {
   }
 });
 
-app.post('/api/auth/google', (req, res) => {
+app.post('/api/auth/google', async (req, res) => {
   try {
     const { email, name, avatar, preferredRole } = req.body;
     if (!email) {
       return res.status(400).json({ success: false, error: 'Email de Google requerido.' });
     }
-    const result = authDatabase.authenticateGoogle({
+    const result = await authDatabase.authenticateGoogle({
       email,
       name: name || 'Usuario Google',
       avatar,
@@ -822,22 +822,22 @@ app.post('/api/auth/google', (req, res) => {
   }
 });
 
-app.get('/api/auth/users', (req, res) => {
+app.get('/api/auth/users', async (req, res) => {
   try {
-    const users = authDatabase.getAllSafeUsers();
+    const users = await authDatabase.getAllSafeUsers();
     return res.json({ success: true, users });
   } catch (err: any) {
     return res.status(500).json({ success: false, error: 'Error listando usuarios.' });
   }
 });
 
-app.post('/api/auth/update-role', (req, res) => {
+app.post('/api/auth/update-role', async (req, res) => {
   try {
     const { email, role } = req.body;
     if (!email || !role) {
       return res.status(400).json({ success: false, error: 'Email y nuevo rol son obligatorios.' });
     }
-    const updated = authDatabase.updateRole(email, role);
+    const updated = await authDatabase.updateRole(email, role);
     return res.json({ success: updated });
   } catch (err: any) {
     return res.status(500).json({ success: false, error: 'Error actualizando rol.' });
@@ -845,39 +845,39 @@ app.post('/api/auth/update-role', (req, res) => {
 });
 
 // Developer God Mode Data Management & Inspection Endpoints
-app.post('/api/developer/update-user', (req, res) => {
+app.post('/api/developer/update-user', async (req, res) => {
   try {
     const { email, name, role } = req.body;
     if (!email) {
       return res.status(400).json({ success: false, error: 'Email requerido.' });
     }
-    const success = authDatabase.updateUser(email, { name, role });
+    const success = await authDatabase.updateUser(email, { name, role });
     return res.json({ success, message: success ? 'Usuario modificado con éxito.' : 'Usuario no encontrado.' });
   } catch (err: any) {
     return res.status(500).json({ success: false, error: err.message });
   }
 });
 
-app.post('/api/developer/reset-password', (req, res) => {
+app.post('/api/developer/reset-password', async (req, res) => {
   try {
     const { email, newPassword } = req.body;
     if (!email || !newPassword) {
       return res.status(400).json({ success: false, error: 'Email y nueva contraseña son obligatorios.' });
     }
-    const success = authDatabase.resetPassword(email, newPassword);
+    const success = await authDatabase.resetPassword(email, newPassword);
     return res.json({ success, message: success ? 'Contraseña PBKDF2/SHA-512 rehasheada con éxito.' : 'Usuario no encontrado.' });
   } catch (err: any) {
     return res.status(500).json({ success: false, error: err.message });
   }
 });
 
-app.post('/api/developer/delete-user', (req, res) => {
+app.post('/api/developer/delete-user', async (req, res) => {
   try {
     const { email } = req.body;
     if (!email) {
       return res.status(400).json({ success: false, error: 'Email requerido.' });
     }
-    const success = authDatabase.deleteUser(email);
+    const success = await authDatabase.deleteUser(email);
     return res.json({ success, message: success ? 'Usuario eliminado del registro.' : 'Usuario no encontrado.' });
   } catch (err: any) {
     return res.status(500).json({ success: false, error: err.message });
@@ -966,13 +966,13 @@ const initialProtocols: ClinicalProtocol[] = [
 let clinicalProtocolsStore: ClinicalProtocol[] = [...initialProtocols];
 
 // 1. Admin Users CRUD
-app.post('/api/admin/users/create', (req, res) => {
+app.post('/api/admin/users/create', async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
     if (!email || !password || !name) {
       return res.status(400).json({ success: false, error: 'Nombre, email y contraseña son obligatorios.' });
     }
-    const result = authDatabase.registerUser({
+    const result = await authDatabase.registerUser({
       name,
       email,
       passwordPlain: password,
@@ -984,7 +984,7 @@ app.post('/api/admin/users/create', (req, res) => {
   }
 });
 
-app.post('/api/admin/users/update', (req, res) => {
+app.post('/api/admin/users/update', async (req, res) => {
   try {
     const { email, name, role, newPassword } = req.body;
     if (!email) {
@@ -992,11 +992,10 @@ app.post('/api/admin/users/update', (req, res) => {
     }
     let updated = false;
     if (name || role) {
-      updated = authDatabase.updateUser(email, { name, role });
+      updated = await authDatabase.updateUser(email, { name, role });
     }
     if (newPassword) {
-      authDatabase.resetPassword(email, newPassword);
-      updated = true;
+      updated = await authDatabase.resetPassword(email, newPassword) || updated;
     }
     return res.json({ success: updated, message: 'Usuario actualizado correctamente.' });
   } catch (err: any) {
@@ -1004,13 +1003,13 @@ app.post('/api/admin/users/update', (req, res) => {
   }
 });
 
-app.post('/api/admin/users/delete', (req, res) => {
+app.post('/api/admin/users/delete', async (req, res) => {
   try {
     const { email } = req.body;
     if (!email) {
       return res.status(400).json({ success: false, error: 'Email es requerido.' });
     }
-    const success = authDatabase.deleteUser(email);
+    const success = await authDatabase.deleteUser(email);
     return res.json({ success, message: success ? 'Usuario eliminado.' : 'Usuario no encontrado.' });
   } catch (err: any) {
     return res.status(500).json({ success: false, error: err.message });
@@ -1090,9 +1089,9 @@ app.post('/api/admin/protocols/delete', (req, res) => {
   }
 });
 
-app.post('/api/developer/reseed-db', (req, res) => {
+app.post('/api/developer/reseed-db', async (req, res) => {
   try {
-    authDatabase.reseedDefaultUsers();
+    await authDatabase.reseedDefaultUsers();
     return res.json({ success: true, message: 'Base de datos restaurada con las 3 cuentas de usuario, 2 de admin y 2 de developer.' });
   } catch (err: any) {
     return res.status(500).json({ success: false, error: err.message });
@@ -1180,9 +1179,9 @@ app.get('/api/developer/gemini-validation', async (req, res) => {
 });
 
 // Backoffice Metrics & Clinical Telemetry Endpoint
-app.get('/api/backoffice/dashboard-stats', (req, res) => {
+app.get('/api/backoffice/dashboard-stats', async (req, res) => {
   try {
-    const stats = getBackofficeMetrics();
+    const stats = await getBackofficeMetrics();
     return res.json({ success: true, stats });
   } catch (err: any) {
     console.error('Error en /api/backoffice/dashboard-stats:', err);
@@ -2272,6 +2271,7 @@ Genera un reporte clínico, recetas maestras y guía de compra para la familia e
 
 // Start server with Vite middleware in development or static in production
 async function start() {
+  await authDatabase.initialize();
   const legacySitePath = path.join(process.cwd(), 'public', 'sitio');
   const legacySiteOptions = {
     maxAge: '1d',
