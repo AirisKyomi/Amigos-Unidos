@@ -772,7 +772,18 @@ section {
 }
 
 .Amigos-mas .card .card-img img {
+  display: block;
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  object-position: center;
   transition: 0.3s ease-in-out;
+}
+
+@media (max-width: 575px) {
+  .Amigos-mas .card .card-img img {
+    height: 220px;
+  }
 }
 
 .Amigos-mas .card h3 {
