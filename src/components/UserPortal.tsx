@@ -134,6 +134,53 @@ export const UserPortal: React.FC<UserPortalProps> = ({
         onSelectAge={setSelectedAge}
       />
 
+      <nav
+        aria-label="Apartados del perfil familiar"
+        role="tablist"
+        className="w-full max-w-7xl mx-auto px-4 sm:px-6 pt-3"
+      >
+        <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-5 gap-2">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = activeTab === item.id;
+            const shortLabels: Record<string, string> = {
+              chat: 'IA principal',
+              growth: 'Crecimiento',
+              calendar: 'Calendario',
+              derma: 'Piel',
+              cry: 'Llanto',
+              milestones: 'Desarrollo',
+              pregnancy: 'Embarazo',
+              genetic: 'Menú BLW',
+              kids_zone: 'Zona Niños',
+            };
+
+            return (
+              <button
+                key={item.id}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                title={item.label}
+                onClick={() => setActiveTab(item.id as typeof activeTab)}
+                className={`min-h-14 px-2 py-2 rounded-xl border flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-700 ${
+                  isActive
+                    ? currentTheme.id === 'dark'
+                      ? 'bg-cyan-900/70 text-cyan-100 border-cyan-700'
+                      : 'bg-cyan-50 text-cyan-950 border-cyan-300'
+                    : currentTheme.id === 'dark'
+                      ? 'bg-slate-900/60 text-slate-200 border-slate-700 hover:bg-slate-800'
+                      : 'bg-white text-slate-700 border-slate-200 hover:bg-cyan-50 hover:border-cyan-200'
+                }`}
+              >
+                <Icon className="w-4 h-4 shrink-0" aria-hidden="true" />
+                <span className="text-center leading-tight">{shortLabels[item.id]}</span>
+              </button>
+            );
+          })}
+        </div>
+      </nav>
+
       {/* Main View Area */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-5">
         <Suspense
