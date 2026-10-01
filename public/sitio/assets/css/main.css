@@ -573,6 +573,22 @@ section {
 }
 
 /*--------------------------------------------------------------
+# Home Brand Image
+--------------------------------------------------------------*/
+.home-brand-hero {
+  padding-top: 80px;
+  background: #fff;
+}
+
+.home-brand-hero img {
+  display: block;
+  width: 100%;
+  max-width: 1280px;
+  height: auto;
+  margin: 0 auto;
+}
+
+/*--------------------------------------------------------------
 # Featured Amigos-mas Section
 --------------------------------------------------------------*/
 .featured-Amigos-mas .Amigos-mas-item {
