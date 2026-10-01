@@ -183,7 +183,9 @@ export const LandingHome: React.FC<LandingHomeProps> = ({ onNavigateToRoleView }
           {/* Center: Logo Branding */}
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-amber-100 border border-amber-300 flex items-center justify-center p-1 shadow-2xs">
-              <FroggiAvatar size="sm" expression="happy" />
+              <a href="/" aria-label="Volver a la web principal de Amigos Unidos" title="Volver a la web principal" className="inline-flex rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-600">
+                <FroggiAvatar size="sm" expression="happy" />
+              </a>
             </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5">

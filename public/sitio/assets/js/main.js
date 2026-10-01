@@ -8,9 +8,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   "use strict";
 
-  // Keep the footer navigation aligned with the site's primary navigation.
-  const primaryLinks = [...document.querySelectorAll('#navbar > ul > li > a')];
-  const footerList = document.querySelector('.footer .footer-links ul');
   const footerDescription = document.querySelector('.footer .footer-info > p');
   if (footerDescription) {
     footerDescription.textContent = 'Recursos educativos e IA Ayudante para acompañar a niños, familias y cuidadores en el aprendizaje diario.';
@@ -50,20 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
       site.textContent = 'Amigos Unidos';
       details.replaceChildren(phoneLabel, phone, document.createElement('br'), siteLabel, site);
     }
-  }
-
-  if (footerList && primaryLinks.length) {
-    footerList.replaceChildren(...primaryLinks.map((link) => {
-      const item = document.createElement('li');
-      const icon = document.createElement('i');
-      const footerLink = document.createElement('a');
-      icon.className = 'bi bi-arrow-right';
-      icon.setAttribute('aria-hidden', 'true');
-      footerLink.href = link.getAttribute('href');
-      footerLink.textContent = link.textContent.trim();
-      item.append(icon, footerLink);
-      return item;
-    }));
   }
 
   /**
