@@ -2046,10 +2046,16 @@ img {
   background-position: center;
 }
 
-.footer .footer-links ~ .footer-links,
-.footer .footer-contact,
-.footer .social-links {
+.footer .footer-links ~ .footer-links {
   display: none;
+}
+
+.footer .footer-contact {
+  display: block;
+}
+
+.footer .social-links {
+  display: flex;
 }
 
 .footer .footer-links ul {
@@ -2068,6 +2074,26 @@ img {
 
 .footer .footer-links ul a {
   font-size: 15px;
+}
+
+.footer .footer-contact a {
+  color: #8de2df;
+  font-size: 14px;
+}
+
+.footer .footer-contact a:hover {
+  color: #fff;
+}
+
+.footer .social-links .whatsapp-link {
+  color: #8de2df;
+  border-color: rgba(141, 226, 223, 0.55);
+}
+
+.footer .social-links .whatsapp-link:hover {
+  color: #fff;
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.12);
 }
 
 @media (max-width: 767px) {

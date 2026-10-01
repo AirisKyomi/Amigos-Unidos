@@ -16,6 +16,42 @@ document.addEventListener('DOMContentLoaded', () => {
     footerDescription.textContent = 'Recursos educativos e IA Ayudante para acompañar a niños, familias y cuidadores en el aprendizaje diario.';
   }
 
+  const socialLinks = document.querySelector('.footer .social-links');
+  if (socialLinks) {
+    const whatsapp = document.createElement('a');
+    const icon = document.createElement('i');
+    whatsapp.href = 'https://wa.me/573332439423';
+    whatsapp.className = 'whatsapp-link';
+    whatsapp.target = '_blank';
+    whatsapp.rel = 'noopener noreferrer';
+    whatsapp.title = 'Escríbenos por WhatsApp al +57 333 243 9423';
+    whatsapp.setAttribute('aria-label', whatsapp.title);
+    icon.className = 'bi bi-whatsapp';
+    icon.setAttribute('aria-hidden', 'true');
+    whatsapp.append(icon);
+    socialLinks.replaceChildren(whatsapp);
+  }
+
+  const footerContact = document.querySelector('.footer .footer-contact');
+  if (footerContact) {
+    const heading = footerContact.querySelector('h4');
+    const details = footerContact.querySelector('p');
+    if (heading) heading.textContent = 'Contacto';
+    if (details) {
+      const phoneLabel = document.createElement('strong');
+      const phone = document.createElement('a');
+      const siteLabel = document.createElement('strong');
+      const site = document.createElement('a');
+      phoneLabel.textContent = 'WhatsApp: ';
+      phone.href = 'tel:+573332439423';
+      phone.textContent = '+57 333 243 9423';
+      siteLabel.textContent = 'Web: ';
+      site.href = 'https://amigos-unidos.onrender.com/';
+      site.textContent = 'Amigos Unidos';
+      details.replaceChildren(phoneLabel, phone, document.createElement('br'), siteLabel, site);
+    }
+  }
+
   if (footerList && primaryLinks.length) {
     footerList.replaceChildren(...primaryLinks.map((link) => {
       const item = document.createElement('li');
