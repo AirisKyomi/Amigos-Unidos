@@ -2276,6 +2276,11 @@ async function start() {
   const legacySiteOptions = {
     maxAge: '1d',
     etag: true,
+    setHeaders(res: import('express').Response, filePath: string) {
+      if (/\.(html|css|js)$/i.test(filePath)) {
+        res.setHeader('Cache-Control', 'no-cache, must-revalidate');
+      }
+    },
   };
   app.use('/sitio', express.static(legacySitePath, legacySiteOptions));
 
