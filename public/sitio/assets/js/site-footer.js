@@ -9,7 +9,7 @@
           <a href="/" class="logo d-flex align-items-center">
             <span>Amigos Unidos</span>
           </a>
-          <p>Recursos educativos e IA Ayudante para acompañar a niños, familias y cuidadores.</p>
+          <p>Plataforma de inteligencia artificial con Froggi y herramientas digitales para acompañar a las familias.</p>
           <div class="social-links d-flex mt-3">
             <a href="https://wa.me/573332439423" class="whatsapp-link" aria-label="WhatsApp Amigos Unidos" title="WhatsApp">
               <i class="bi bi-whatsapp" aria-hidden="true"></i>
@@ -23,7 +23,7 @@
             <li><i class="bi bi-chevron-right"></i><a href="/ia-ayudante/">IA Ayudante</a></li>
             <li><i class="bi bi-chevron-right"></i><a href="/about.html">Nosotros</a></li>
             <li><i class="bi bi-chevron-right"></i><a href="/Amigos-mas.html">Amigos+</a></li>
-            <li><i class="bi bi-chevron-right"></i><a href="/pricing.html">Precios</a></li>
+            <li><i class="bi bi-chevron-right"></i><a href="/pricing.html">Funciones IA</a></li>
           </ul>
         </div>
         <div class="col-lg-3 col-md-6 footer-contact">

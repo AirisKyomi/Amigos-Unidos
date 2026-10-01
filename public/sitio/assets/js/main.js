@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const footerDescription = document.querySelector('.footer .footer-info > p');
   if (footerDescription) {
-    footerDescription.textContent = 'Recursos educativos e IA Ayudante para acompañar a niños, familias y cuidadores en el aprendizaje diario.';
+    footerDescription.textContent = 'Plataforma de inteligencia artificial con Froggi y herramientas digitales para acompañar a las familias.';
   }
 
   const socialLinks = document.querySelector('.footer .social-links');
