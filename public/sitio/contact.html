@@ -122,7 +122,12 @@
 
           <div class="col-lg-8">
 
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+            <form id="contact-form" method="post" role="form" class="php-email-form">
+
+              <div aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden;">
+                <label for="website">No completar</label>
+                <input type="text" name="website" id="website" tabindex="-1" autocomplete="off">
+              </div>
 
               <div class="row">
 
@@ -130,6 +135,7 @@
                   <input
                     type="text"
                     name="name"
+                    maxlength="100"
                     class="form-control"
                     id="name"
                     placeholder="Tu nombre"
@@ -141,6 +147,7 @@
                     type="email"
                     class="form-control"
                     name="email"
+                    maxlength="254"
                     id="email"
                     placeholder="Tu correo electrónico"
                     required>
@@ -153,6 +160,7 @@
                   type="text"
                   class="form-control"
                   name="subject"
+                  maxlength="160"
                   id="subject"
                   placeholder="Asunto"
                   required>
@@ -163,8 +171,16 @@
                   class="form-control"
                   name="message"
                   rows="5"
+                  maxlength="3000"
                   placeholder="Escribe tu mensaje"
                   required></textarea>
+              </div>
+
+              <div class="form-group mt-3">
+                <label class="d-flex align-items-start gap-2">
+                  <input type="checkbox" name="consent" value="true" required>
+                  <span>Autorizo el uso de mis datos para responder este mensaje.</span>
+                </label>
               </div>
 
               <div class="my-3">
@@ -289,7 +305,48 @@
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script>
+    (() => {
+      const form = document.getElementById('contact-form');
+      if (!form) return;
+      const loading = form.querySelector('.loading');
+      const error = form.querySelector('.error-message');
+      const sent = form.querySelector('.sent-message');
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        loading.classList.add('d-block');
+        error.classList.remove('d-block');
+        sent.classList.remove('d-block');
+        const values = new FormData(form);
+
+        try {
+          const response = await fetch('/api/public/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: values.get('name'),
+              email: values.get('email'),
+              subject: values.get('subject'),
+              message: values.get('message'),
+              website: values.get('website'),
+              consent: values.get('consent') === 'true'
+            })
+          });
+          const result = await response.json();
+          if (!response.ok || !result.success) throw new Error(result.error || 'No pudimos enviar tu mensaje.');
+          sent.textContent = result.message;
+          sent.classList.add('d-block');
+          form.reset();
+        } catch (submitError) {
+          error.textContent = submitError instanceof Error ? submitError.message : 'Error de conexión. Inténtalo de nuevo.';
+          error.classList.add('d-block');
+        } finally {
+          loading.classList.remove('d-block');
+        }
+      });
+    })();
+  </script>
 
   <script src="assets/js/site-footer.js?v=20260930"></script>
 

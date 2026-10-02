@@ -218,8 +218,19 @@ class SimpleAuthDatabase {
       );
       const page = Array.isArray(result.rows) ? result.rows : [];
       rows.push(...page);
-      if (page.length < 100) return rows;
+      if (page.length < 100) return rows.filter((row) => this.isRemoteUserRow(row));
       offset += page.length;
+    }
+  }
+
+  private isRemoteUserRow(row: any): boolean {
+    try {
+      const payload = JSON.parse(row.payload);
+      return typeof payload?.email === 'string'
+        && typeof payload?.passwordHash === 'string'
+        && typeof payload?.salt === 'string';
+    } catch {
+      return false;
     }
   }
 
@@ -255,6 +266,22 @@ class SimpleAuthDatabase {
     await this.appwriteRequest(`/tablesdb/${databaseId}/tables/${tableId}/rows`, {
       method: 'POST', body: JSON.stringify({ rowId: user.id, data, permissions: [] })
     });
+  }
+
+  public async createPublicRecord(type: 'contact' | 'purchase', fields: Record<string, unknown>): Promise<string> {
+    if (!this.appwriteConfig) throw new Error('Appwrite no está configurado en el servidor.');
+    const { databaseId, tableId } = this.appwriteConfig;
+    const id = crypto.randomUUID();
+    const data = {
+      email: `submission-${id}@records.amigosunidos.invalid`,
+      payload: JSON.stringify({ recordType: type, ...fields, submittedAt: new Date().toISOString() }),
+    };
+
+    await this.appwriteRequest(`/tablesdb/${databaseId}/tables/${tableId}/rows`, {
+      method: 'POST',
+      body: JSON.stringify({ rowId: id, data, permissions: [] }),
+    });
+    return id;
   }
 
   private saveToDisk() {

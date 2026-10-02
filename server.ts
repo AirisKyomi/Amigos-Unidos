@@ -13,6 +13,7 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
+app.set('trust proxy', 1);
 
 // Enable gzip / brotli compression for all JSON & web traffic
 app.use(compression());
@@ -751,6 +752,26 @@ function generatePediatricOfflineReply(message: string, childAge: string): { rep
 
 
 // API Routes
+const publicSubmissionLimits = new Map<string, { count: number; resetAt: number }>();
+
+function allowPublicSubmission(ip: string): boolean {
+  const now = Date.now();
+  const current = publicSubmissionLimits.get(ip);
+  if (!current || current.resetAt <= now) {
+    publicSubmissionLimits.set(ip, { count: 1, resetAt: now + 10 * 60 * 1000 });
+    return true;
+  }
+  if (current.count >= 8) return false;
+  current.count += 1;
+  return true;
+}
+
+function cleanText(value: unknown, maxLength: number): string {
+  return typeof value === 'string' ? value.trim().slice(0, maxLength) : '';
+}
+
+const VALID_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
@@ -759,6 +780,72 @@ app.get('/api/health', (req, res) => {
     character: 'Froggi',
     hasApiKey: Boolean(process.env.GEMINI_API_KEY),
   });
+});
+
+app.post('/api/public/contact', async (req, res) => {
+  const { website } = req.body || {};
+  if (cleanText(website, 200)) return res.json({ success: true });
+  if (!allowPublicSubmission(req.ip || 'unknown')) {
+    return res.status(429).json({ success: false, error: 'Inténtalo de nuevo en unos minutos.' });
+  }
+
+  const name = cleanText(req.body?.name, 100);
+  const email = cleanText(req.body?.email, 254).toLowerCase();
+  const subject = cleanText(req.body?.subject, 160);
+  const message = cleanText(req.body?.message, 3000);
+  const consent = req.body?.consent === true;
+  if (!name || !VALID_EMAIL.test(email) || !subject || !message || !consent) {
+    return res.status(400).json({ success: false, error: 'Revisa los datos y acepta el uso de tus datos para responderte.' });
+  }
+
+  try {
+    await authDatabase.createPublicRecord('contact', { name, email, subject, message, consent });
+    return res.status(201).json({ success: true, message: 'Recibimos tu mensaje. Gracias por contactarnos.' });
+  } catch (error: any) {
+    console.error('Error guardando contacto en Appwrite:', error?.message || error);
+    return res.status(503).json({ success: false, error: 'No pudimos guardar tu mensaje. Inténtalo más tarde.' });
+  }
+});
+
+app.post('/api/public/purchases', async (req, res) => {
+  if (!allowPublicSubmission(req.ip || 'unknown')) {
+    return res.status(429).json({ success: false, error: 'Inténtalo de nuevo en unos minutos.' });
+  }
+
+  const plans: Record<string, { name: string; monthly: number; annualMonthly: number }> = {
+    free: { name: 'Plan Semillita', monthly: 0, annualMonthly: 0 },
+    growth: { name: 'Plan Crecimiento Froggi', monthly: 8.99, annualMonthly: 6.99 },
+    family: { name: 'Plan Familia Amigos Unidos Plus', monthly: 14.99, annualMonthly: 11.99 },
+  };
+  const plan = plans[cleanText(req.body?.planId, 30)];
+  const billingCycle = req.body?.billingCycle === 'yearly' ? 'yearly' : 'monthly';
+  const name = cleanText(req.body?.name, 100);
+  const email = cleanText(req.body?.email, 254).toLowerCase();
+  const phone = cleanText(req.body?.phone, 40);
+  const consent = req.body?.consent === true;
+  if (!plan || !name || !VALID_EMAIL.test(email) || !phone || !consent) {
+    return res.status(400).json({ success: false, error: 'Completa tus datos, el teléfono y la autorización para continuar.' });
+  }
+
+  try {
+    await authDatabase.createPublicRecord('purchase', {
+      planId: cleanText(req.body?.planId, 30),
+      planName: plan.name,
+      billingCycle,
+      pricePerMonth: billingCycle === 'yearly' ? plan.annualMonthly : plan.monthly,
+      totalPrice: (billingCycle === 'yearly' ? plan.annualMonthly : plan.monthly) * (billingCycle === 'yearly' ? 12 : 1),
+      currency: 'USD',
+      paymentStatus: 'not_processed_demo',
+      name,
+      email,
+      phone,
+      consent,
+    });
+    return res.status(201).json({ success: true, message: 'Solicitud de demostración guardada. No se realizó ningún cobro.' });
+  } catch (error: any) {
+    console.error('Error guardando solicitud de compra en Appwrite:', error?.message || error);
+    return res.status(503).json({ success: false, error: 'No pudimos guardar la solicitud. Inténtalo más tarde.' });
+  }
 });
 
 // -------------------------------------------------------------
