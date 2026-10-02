@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useFamily } from '../context/FamilyContext';
 import { useTheme } from '../context/ThemeContext';
 import { FroggiAvatar } from './MascotSVGs';
+import { PricingPlans } from './PricingPlans';
 import { PlatformRole } from '../types';
 import { AnimatedRainbowCloud } from './AnimatedRainbowCloud';
 import {
@@ -34,7 +35,8 @@ import {
   Check,
   Shield,
   BookOpen,
-  Home
+  Home,
+  CreditCard
 } from 'lucide-react';
 
 interface LandingHomeProps {
@@ -357,6 +359,18 @@ export const LandingHome: React.FC<LandingHomeProps> = ({ onNavigateToRoleView }
                     </p>
                   </div>
                 </a>
+
+                <a
+                  href="#planes"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="p-3 rounded-2xl hover:bg-amber-50 flex items-center gap-3 text-slate-800 transition-colors border border-transparent hover:border-amber-200/60"
+                >
+                  <CreditCard className="w-4 h-4 text-amber-700 shrink-0" />
+                  <div>
+                    <p className="font-bold text-amber-950">Planes de IA</p>
+                    <p className="text-[11px] text-slate-500 font-normal">Solicitud de demostración sin cobro</p>
+                  </div>
+                </a>
               </div>
 
               {/* Opciones de Acceso Rápido a Perfiles */}
@@ -540,6 +554,10 @@ export const LandingHome: React.FC<LandingHomeProps> = ({ onNavigateToRoleView }
             Nuestros árboles de decisión y algoritmos están fundamentados en los manuales pediátricos oficiales de la <strong>Organización Mundial de la Salud (OMS)</strong>, la <strong>Academia Americana de Pediatría (AAP)</strong> y <strong>UNICEF</strong>.
           </p>
         </div>
+      </section>
+
+      <section id="planes" className="w-full border-y border-amber-200 bg-[#FFFDF9] py-8 scroll-mt-16">
+        <PricingPlans />
       </section>
 
       {/* ---------------------------------------------------- */}
