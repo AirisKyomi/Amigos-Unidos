@@ -106,8 +106,8 @@ export interface BackofficeDashboardStats {
   }[];
 }
 
-export async function getBackofficeMetrics(): Promise<BackofficeDashboardStats> {
-  const users = await authDatabase.getAllSafeUsers();
+export function getBackofficeMetrics(): BackofficeDashboardStats {
+  const users = authDatabase.getAllSafeUsers();
 
   return {
     consultationMetrics: {
@@ -207,11 +207,11 @@ export async function getBackofficeMetrics(): Promise<BackofficeDashboardStats> 
       costPerMillionTokensEstimate: '$0.075 / 1M tokens (Nivel más económico del mercado)',
       serverUptimeHours: 148,
       localDbStatus: {
-        type: 'Appwrite TablesDB + PBKDF2/SHA-512',
+        type: 'Base de Datos Criptográfica Ligera Persistente (JSON + PBKDF2/SHA-512)',
         hashingAlgorithm: 'PBKDF2 con SHA-512 y Salt Criptográfico Único de 16 bytes',
         encryptionSaltsActive: true,
         totalRegisteredUsers: users.length,
-        freeStorageCost: 'Appwrite TablesDB (plan según cuenta)'
+        freeStorageCost: '$0.00 / mes (100% gratuito sin dependencias de terceros)'
       }
     },
     recentAuditLogs: [

@@ -8,23 +8,15 @@ import {
   ShieldCheck,
   HelpCircle,
   Zap,
-  Heart,
-  X
+  Heart
 } from 'lucide-react';
 
 export const PricingPlans: React.FC = () => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
-  const [selectedPlanModal, setSelectedPlanModal] = useState<{ id: string; name: string; price: string; period: string } | null>(null);
-  const [buyer, setBuyer] = useState({ name: '', email: '', phone: '', consent: false });
-  const [checkoutMessage, setCheckoutMessage] = useState('');
-  const [checkoutStatus, setCheckoutStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedPlanModal, setSelectedPlanModal] = useState<string | null>(null);
 
-  const handleSelectPlan = (plan: { id: string; name: string; price: string; period: string }) => {
-    setSelectedPlanModal(plan);
-    setBuyer({ name: '', email: '', phone: '', consent: false });
-    setCheckoutMessage('');
-    setCheckoutStatus('idle');
+  const handleSelectPlan = (planName: string) => {
+    setSelectedPlanModal(planName);
     confetti({
       particleCount: 60,
       spread: 70,
@@ -32,42 +24,19 @@ export const PricingPlans: React.FC = () => {
     });
   };
 
-  const handleCheckoutSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!selectedPlanModal || isSubmitting) return;
-    setIsSubmitting(true);
-    setCheckoutMessage('');
-    try {
-      const response = await fetch('/api/public/purchases', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...buyer, planId: selectedPlanModal.id, billingCycle }),
-      });
-      const result = await response.json();
-      if (!response.ok || !result.success) throw new Error(result.error || 'No pudimos guardar la solicitud.');
-      setCheckoutStatus('success');
-      setCheckoutMessage(result.message);
-    } catch (error) {
-      setCheckoutStatus('error');
-      setCheckoutMessage(error instanceof Error ? error.message : 'Error de conexión. Inténtalo de nuevo.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   const plans = [
     {
       id: 'free',
       name: 'Plan Semillita',
-      subtitle: 'Acceso gratuito de demostración',
+      subtitle: 'Ideal para conocer la plataforma y primeros cuidados',
       price: 'Gratis',
-      period: 'Para siempre',
+      period: 'Para Siempre (Prototipo)',
       mascot: 'caracolito',
       color: 'border-slate-200 bg-white text-slate-900',
       badge: 'Acceso Gratuito',
       badgeBg: 'bg-slate-100 text-slate-700',
-      btnText: 'Solicitar acceso de demostración',
-      btnClass: 'bg-slate-800 hover:bg-slate-900 text-white cursor-pointer',
+      btnText: 'Plan Activo Actual',
+      btnClass: 'bg-slate-100 text-slate-600 cursor-default',
       features: [
         'Consultas pediátricas con Froggi (Transformer base)',
         'Calculadora de percentiles OMS (LMS Z-scores)',
@@ -79,14 +48,14 @@ export const PricingPlans: React.FC = () => {
     {
       id: 'growth',
       name: 'Plan Crecimiento Froggi',
-      subtitle: 'Orientación y herramientas para acompañar a tu familia',
+      subtitle: 'El favorito de las familias primerizas',
       price: billingCycle === 'monthly' ? '$8.99' : '$6.99',
-      period: billingCycle === 'monthly' ? 'USD / mes' : 'USD / mes (facturado anual)',
+      period: billingCycle === 'monthly' ? '/ mes' : '/ mes (facturado anual)',
       mascot: 'froggi',
       color: 'border-emerald-400 bg-emerald-50/50 text-emerald-950 shadow-md ring-2 ring-emerald-500/30',
       badge: 'Más Recomendado',
       badgeBg: 'bg-emerald-600 text-white',
-      btnText: 'Solicitar demostración',
+      btnText: 'Comenzar Prueba de 7 Días',
       btnClass: 'bg-emerald-600 hover:bg-emerald-700 text-white cursor-pointer shadow-sm',
       features: [
         'Consultas ilimitadas 24/7 con Froggi IA Pediátrica',
@@ -100,14 +69,14 @@ export const PricingPlans: React.FC = () => {
     {
       id: 'family',
       name: 'Plan Familia Amigos Unidos Plus',
-      subtitle: 'Una solicitud de demostración para toda la familia',
+      subtitle: 'Para hogares con más de un peque y máxima personalización',
       price: billingCycle === 'monthly' ? '$14.99' : '$11.99',
-      period: billingCycle === 'monthly' ? 'USD / mes' : 'USD / mes (facturado anual)',
+      period: billingCycle === 'monthly' ? '/ mes' : '/ mes (facturado anual)',
       mascot: 'pandita',
       color: 'border-pink-300 bg-white text-slate-900 shadow-xs',
       badge: 'Hasta 4 Niños',
       badgeBg: 'bg-pink-100 text-pink-800',
-      btnText: 'Solicitar plan familiar',
+      btnText: 'Elegir Plan Familiar',
       btnClass: 'bg-pink-600 hover:bg-pink-700 text-white cursor-pointer shadow-sm',
       features: [
         'Todo lo incluido en el Plan Crecimiento',
@@ -126,13 +95,13 @@ export const PricingPlans: React.FC = () => {
       <div className="text-center max-w-2xl mx-auto space-y-3">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-extrabold">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>Planes de demostración</span>
+          <span>Planes de Pago Transparentes & Flexibles</span>
         </div>
         <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
           Acompaña cada etapa de tu peque con el respaldo de la IA Pediátrica
         </h2>
         <p className="text-xs sm:text-sm text-slate-600">
-          Elige una opción para registrar una solicitud. No se realizará ningún pago ni se activará una suscripción.
+          Elige el plan ideal para tu familia. Cancela o cambia de plan en cualquier momento con 1 solo clic.
         </p>
 
         {/* Billing Toggle */}
@@ -156,7 +125,7 @@ export const PricingPlans: React.FC = () => {
               Pago Anual
             </span>
             <span className="text-[10px] font-black bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">
-              Ahorra hasta 22%
+              Ahorra 25%
             </span>
           </div>
         </div>
@@ -208,7 +177,7 @@ export const PricingPlans: React.FC = () => {
             <div className="pt-6 mt-4 border-t border-slate-200/40">
               <button
                 id={`btn-plan-${plan.id}`}
-                onClick={() => handleSelectPlan(plan)}
+                onClick={() => handleSelectPlan(plan.name)}
                 className={`w-full py-3 rounded-2xl font-bold text-xs transition-all ${plan.btnClass}`}
               >
                 {plan.btnText}
@@ -218,66 +187,46 @@ export const PricingPlans: React.FC = () => {
         ))}
       </div>
 
-      {/* Demo notice */}
+      {/* Safety & Guarantee */}
       <div className="bg-slate-50 border border-slate-200 rounded-3xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <ShieldCheck className="w-8 h-8 text-emerald-600 shrink-0" />
           <div className="text-xs">
-            <h4 className="font-extrabold text-slate-800 text-sm">Compra de demostración</h4>
+            <h4 className="font-extrabold text-slate-800 text-sm">Garantía Médica & Privacidad Absoluta</h4>
             <p className="text-slate-600 mt-0.5">
-              Esta solicitud se guarda en Appwrite para seguimiento. No se ingresan datos de tarjeta ni se realiza ningún cobro.
+              Tus datos de salud y consultas son 100% privados y encriptados, nunca compartidos con terceros ni aseguradoras.
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-2 text-xs font-bold text-slate-600 bg-white px-3 py-2 rounded-xl border border-slate-200 shrink-0">
           <CreditCard className="w-4 h-4 text-emerald-600" />
-          <span>Sin cobro real</span>
+          <span>Pagos Seguros SSL</span>
         </div>
       </div>
 
-      {/* Simulated purchase form */}
+      {/* Checkout Simulation Modal */}
       {selectedPlanModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/60 flex items-center justify-center p-4" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelectedPlanModal(null); }}>
-          <div role="dialog" aria-modal="true" aria-labelledby="checkout-title" className="bg-white rounded-lg p-5 sm:p-6 max-w-md w-full shadow-2xl border border-emerald-200 space-y-4 animate-in fade-in zoom-in">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-[11px] font-bold uppercase text-emerald-700">Solicitud simulada</p>
-                <h3 id="checkout-title" className="text-lg font-black text-slate-900">{selectedPlanModal.name}</h3>
-                <p className="text-sm text-slate-600">{selectedPlanModal.price} <span className="text-xs">{selectedPlanModal.period}</span></p>
-              </div>
-              <button type="button" onClick={() => setSelectedPlanModal(null)} aria-label="Cerrar" className="p-2 text-slate-500 hover:text-slate-900" disabled={isSubmitting}>
-                <X className="w-5 h-5" />
-              </button>
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl border border-emerald-200 text-center space-y-4 animate-in fade-in zoom-in">
+            <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto">
+              <FroggiAvatar size={50} />
             </div>
 
-            {checkoutStatus === 'success' ? (
-              <div role="status" className="space-y-4">
-                <p className="text-sm text-emerald-800 bg-emerald-50 border border-emerald-200 p-3 rounded-md">{checkoutMessage}</p>
-                <button type="button" onClick={() => setSelectedPlanModal(null)} className="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 rounded-md text-sm">Cerrar</button>
-              </div>
-            ) : (
-              <form onSubmit={handleCheckoutSubmit} className="space-y-3">
-                <p className="text-xs text-slate-600">Déjanos tus datos para registrar la solicitud. No se procesará ningún pago.</p>
-                <label className="block text-xs font-semibold text-slate-700">Nombre
-                  <input required maxLength={100} autoComplete="name" value={buyer.name} onChange={(event) => setBuyer({ ...buyer, name: event.target.value })} className="mt-1 w-full border border-slate-300 rounded-md px-3 py-2.5 text-sm" />
-                </label>
-                <label className="block text-xs font-semibold text-slate-700">Correo electrónico
-                  <input required type="email" maxLength={254} autoComplete="email" value={buyer.email} onChange={(event) => setBuyer({ ...buyer, email: event.target.value })} className="mt-1 w-full border border-slate-300 rounded-md px-3 py-2.5 text-sm" />
-                </label>
-                <label className="block text-xs font-semibold text-slate-700">Teléfono
-                  <input required type="tel" maxLength={40} autoComplete="tel" value={buyer.phone} onChange={(event) => setBuyer({ ...buyer, phone: event.target.value })} className="mt-1 w-full border border-slate-300 rounded-md px-3 py-2.5 text-sm" />
-                </label>
-                <label className="flex items-start gap-2 text-xs text-slate-700 leading-relaxed">
-                  <input required type="checkbox" checked={buyer.consent} onChange={(event) => setBuyer({ ...buyer, consent: event.target.checked })} className="mt-0.5 accent-emerald-700" />
-                  <span>Autorizo el uso de estos datos para gestionar esta solicitud de demostración.</span>
-                </label>
-                {checkoutMessage && <p role="alert" className="text-xs text-rose-700 bg-rose-50 border border-rose-200 p-3 rounded-md">{checkoutMessage}</p>}
-                <button type="submit" disabled={isSubmitting} className="w-full bg-emerald-700 hover:bg-emerald-800 disabled:opacity-60 text-white font-bold py-3 rounded-md text-sm">
-                  {isSubmitting ? 'Guardando solicitud…' : 'Confirmar solicitud simulada'}
-                </button>
-              </form>
-            )}
+            <h3 className="text-lg font-black text-slate-900">
+              ¡Bienvenido a {selectedPlanModal}! 🐸
+            </h3>
+
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Has seleccionado el plan para acompañar a tu peque. En este entorno de prototipo, todas las funciones de IA médica, análisis acústico de llanto y percentiles OMS están <strong>100% desbloqueadas y activas</strong> para ti.
+            </p>
+
+            <button
+              onClick={() => setSelectedPlanModal(null)}
+              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-2xl text-xs transition-colors cursor-pointer"
+            >
+              ¡Comenzar a Usar Amigos Unidos!
+            </button>
           </div>
         </div>
       )}

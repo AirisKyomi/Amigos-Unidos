@@ -17,7 +17,8 @@ import {
   Sparkles,
   Baby,
   Check,
-  Clock
+  Clock,
+  Home
 } from 'lucide-react';
 
 export interface NavDrawerItem {
@@ -102,7 +103,7 @@ export const UnifiedHeader: React.FC<UnifiedHeaderProps> = ({
             </button>
 
             {/* Mascot Avatar & Brand Name */}
-            <a href="/" aria-label="Volver a la web principal de Amigos Unidos" title="Volver a la web principal" className="flex items-center gap-2.5 rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-600">
+            <div className="flex items-center gap-2.5">
               <div className="w-10 h-10 rounded-2xl bg-amber-100/90 border border-amber-300/80 flex items-center justify-center p-1 shadow-2xs">
                 <FroggiAvatar size="sm" expression="happy" />
               </div>
@@ -122,7 +123,7 @@ export const UnifiedHeader: React.FC<UnifiedHeaderProps> = ({
                   </span>
                 )}
               </div>
-              </a>
+            </div>
           </div>
 
           {/* RIGHT: Profile Button & Quick Tools */}
@@ -174,6 +175,14 @@ export const UnifiedHeader: React.FC<UnifiedHeaderProps> = ({
               </div>
             </button>
 
+            <a
+              href="/"
+              className="w-10 h-10 inline-flex shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-900 border border-amber-200 transition-colors hover:bg-amber-100"
+              aria-label="Volver al inicio de Amigos Unidos"
+              title="Volver al inicio"
+            >
+              <Home className="w-5 h-5" aria-hidden="true" />
+            </a>
           </div>
         </div>
       </header>

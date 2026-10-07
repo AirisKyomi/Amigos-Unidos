@@ -437,31 +437,31 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6 space-y-6">
       {/* Top Banner & Audio Status */}
-      <div className="bg-gradient-to-r from-rose-500 via-pink-600 to-purple-600 rounded-3xl p-6 text-white shadow-xl relative overflow-hidden">
+      <div className="preg-on-dark bg-gradient-to-r from-rose-700 via-pink-700 to-purple-800 rounded-3xl p-6 text-white shadow-xl relative overflow-hidden">
         <div className="absolute right-0 top-0 translate-x-8 -translate-y-8 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-semibold uppercase tracking-wider text-rose-100">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-black/25 backdrop-blur-md rounded-full text-xs font-bold uppercase tracking-wider text-white">
               <Sparkles className="w-3.5 h-3.5 text-amber-300" />
               <span>Módulo de Embarazo & Salud Materna IA</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
               Acompañamiento Gestacional & Prenatal con Froggi
             </h1>
-            <p className="text-rose-100 text-sm max-w-2xl">
+            <p className="text-white text-sm sm:text-base max-w-2xl">
               Datasets clínicos semana a semana basados en ACOG, OMS y SEGO, herramientas obstétricas de precisión (pataditas, contracciones, maleta) y lectura con voz en audio de todas las recomendaciones.
             </p>
           </div>
 
           {/* Global Voice Status Control */}
-          <div className="flex items-center gap-3 bg-white/15 backdrop-blur-md border border-white/20 p-3 rounded-2xl self-start md:self-auto">
-            <div className={`p-2 rounded-xl ${isSpeaking ? 'bg-amber-400 text-slate-900 animate-pulse' : 'bg-white/20 text-white'}`}>
+          <div className="flex items-center gap-3 bg-black/30 backdrop-blur-md border border-white/30 p-3 rounded-2xl self-start md:self-auto">
+            <div className={`preg-keep p-2 rounded-xl ${isSpeaking ? 'bg-amber-400 text-slate-900 animate-pulse' : 'bg-white/25 text-white'}`}>
               {isSpeaking ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
             </div>
             <div>
               <div className="text-xs font-bold">Voz de Froggi</div>
-              <div className="text-[11px] text-rose-100">
+              <div className="text-xs text-white">
                 {isSpeaking ? 'Leyendo respuesta con audio...' : 'Pulsa los botones 🔊 para escuchar'}
               </div>
             </div>
@@ -484,13 +484,13 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
         {/* Gestational Age Quick Selector & LMP Calculator Bar */}
         <div className="mt-6 pt-5 border-t border-white/20 grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
           {/* Week Slider */}
-          <div className="lg:col-span-7 bg-black/20 backdrop-blur-xs p-3.5 rounded-2xl border border-white/15 space-y-2">
+          <div className="lg:col-span-7 bg-black/35 backdrop-blur-xs p-3.5 rounded-2xl border border-white/15 space-y-2">
             <div className="flex items-center justify-between text-xs font-bold">
-              <span className="flex items-center gap-1.5 text-pink-200">
+              <span className="flex items-center gap-1.5 text-white">
                 <Calendar className="w-4 h-4 text-amber-300" />
                 <span>Semana de Gestación Seleccionada:</span>
               </span>
-              <span className="bg-white text-rose-700 px-3 py-0.5 rounded-full text-xs font-black shadow-xs">
+              <span className="preg-keep bg-white text-rose-800 px-3 py-0.5 rounded-full text-xs font-black shadow-xs">
                 Semana {selectedWeek} ({selectedWeek <= 13 ? '1° Trimestre' : selectedWeek <= 27 ? '2° Trimestre' : '3° Trimestre'})
               </span>
             </div>
@@ -525,10 +525,10 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
           </div>
 
           {/* LMP / FPP Quick Calculator */}
-          <div className="lg:col-span-5 bg-black/20 backdrop-blur-xs p-3.5 rounded-2xl border border-white/15">
+          <div className="lg:col-span-5 bg-black/35 backdrop-blur-xs p-3.5 rounded-2xl border border-white/15">
             <form onSubmit={handleCalculateFromLMP} className="flex flex-wrap items-center gap-2">
               <div className="flex-1 min-w-[140px]">
-                <label className="block text-[11px] font-bold text-pink-200 mb-1">
+                <label className="block text-xs font-bold text-white mb-1">
                   Última Regla (FUM / LMP):
                 </label>
                 <input
@@ -546,7 +546,7 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
               </button>
             </form>
             {calculatedFPP && (
-              <div className="mt-2 text-[11px] text-amber-200 font-semibold flex items-center gap-1">
+              <div className="mt-2 text-xs text-amber-100 font-semibold flex items-center gap-1">
                 <span>🗓️ FPP Estimada:</span>
                 <strong className="text-white font-bold">{calculatedFPP}</strong>
               </div>
@@ -572,11 +572,11 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
             className={`flex-1 min-w-[140px] px-3.5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all cursor-pointer text-center ${
               activeTab === tab.id
                 ? 'bg-rose-600 text-white shadow-md'
-                : 'text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                : 'text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700'
             }`}
           >
             <div>{tab.label}</div>
-            <div className="text-[10px] opacity-75 font-normal">{tab.desc}</div>
+            <div className="text-xs opacity-90 font-normal">{tab.desc}</div>
           </button>
         ))}
       </div>
@@ -598,14 +598,14 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                     <span className="text-xs font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-rose-100 dark:bg-rose-900/50 text-rose-700 dark:text-rose-300">
                       Semana {currentWeekData.week} de 40
                     </span>
-                    <span className="text-xs text-slate-500 font-semibold">
+                    <span className="text-xs text-slate-700 dark:text-slate-300 font-semibold">
                       Trimestre {currentWeekData.trimester}
                     </span>
                   </div>
                   <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
                     Tu bebé tiene el tamaño de: {currentWeekData.babyFruitComparison.fruit}
                   </h2>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-0.5">
+                  <p className="text-sm sm:text-sm text-slate-700 dark:text-slate-300 mt-0.5">
                     {currentWeekData.babyFruitComparison.comparisonText}
                   </p>
                 </div>
@@ -638,7 +638,7 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
             {/* Metric Pills */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5">
               <div className="bg-slate-50 dark:bg-slate-800/60 p-3.5 rounded-2xl border border-slate-100 dark:border-slate-800 text-center">
-                <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 block">
+                <span className="text-xs font-bold text-slate-700 dark:text-slate-300 block">
                   Longitud Fetal Aprox.
                 </span>
                 <span className="text-lg font-black text-rose-600 dark:text-rose-400">
@@ -646,7 +646,7 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                 </span>
               </div>
               <div className="bg-slate-50 dark:bg-slate-800/60 p-3.5 rounded-2xl border border-slate-100 dark:border-slate-800 text-center">
-                <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 block">
+                <span className="text-xs font-bold text-slate-700 dark:text-slate-300 block">
                   Peso Fetal Estimado
                 </span>
                 <span className="text-lg font-black text-purple-600 dark:text-purple-400">
@@ -656,7 +656,7 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                 </span>
               </div>
               <div className="bg-slate-50 dark:bg-slate-800/60 p-3.5 rounded-2xl border border-slate-100 dark:border-slate-800 text-center">
-                <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 block">
+                <span className="text-xs font-bold text-slate-700 dark:text-slate-300 block">
                   Días Transcurridos
                 </span>
                 <span className="text-lg font-black text-emerald-600 dark:text-emerald-400">
@@ -664,7 +664,7 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                 </span>
               </div>
               <div className="bg-slate-50 dark:bg-slate-800/60 p-3.5 rounded-2xl border border-slate-100 dark:border-slate-800 text-center">
-                <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 block">
+                <span className="text-xs font-bold text-slate-700 dark:text-slate-300 block">
                   Progreso Gestacional
                 </span>
                 <span className="text-lg font-black text-amber-600 dark:text-amber-400">
@@ -677,13 +677,13 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
               {/* Fetal Development */}
               <div className="bg-gradient-to-br from-pink-50/50 to-rose-50/50 dark:from-slate-800/80 dark:to-slate-800/40 p-5 rounded-2xl border border-pink-100 dark:border-slate-700 space-y-3">
-                <h3 className="text-sm font-black text-pink-900 dark:text-pink-200 flex items-center gap-2">
+                <h3 className="text-sm font-black text-pink-900 dark:text-white flex items-center gap-2">
                   <Baby className="w-4 h-4 text-pink-600" />
                   <span>Desarrollo del Bebé esta Semana</span>
                 </h3>
                 <ul className="space-y-2">
                   {currentWeekData.fetalDevelopmentHighlights.map((point, idx) => (
-                    <li key={idx} className="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
+                    <li key={idx} className="text-sm text-slate-700 dark:text-slate-300 flex items-start gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-pink-500 mt-1.5 shrink-0" />
                       <span>{point}</span>
                     </li>
@@ -699,7 +699,7 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                 </h3>
                 <ul className="space-y-2">
                   {currentWeekData.maternalBodyChanges.map((point, idx) => (
-                    <li key={idx} className="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
+                    <li key={idx} className="text-sm text-slate-700 dark:text-slate-300 flex items-start gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-1.5 shrink-0" />
                       <span>{point}</span>
                     </li>
@@ -715,7 +715,7 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                 </h3>
                 <ul className="space-y-2">
                   {currentWeekData.recommendedCareAndNutrition.map((point, idx) => (
-                    <li key={idx} className="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
+                    <li key={idx} className="text-sm text-slate-700 dark:text-slate-300 flex items-start gap-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 mt-0.5 shrink-0" />
                       <span>{point}</span>
                     </li>
@@ -735,7 +735,7 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                       Citas o Pruebas Habituales:
                     </span>
                     {currentWeekData.keyMedicalTests.map((t, idx) => (
-                      <p key={idx} className="text-slate-600 dark:text-slate-400 pl-2 border-l-2 border-amber-300">
+                      <p key={idx} className="text-slate-700 dark:text-slate-300 pl-2 border-l-2 border-amber-300">
                         {t}
                       </p>
                     ))}
@@ -790,7 +790,7 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                     <h2 className="text-xl font-black text-slate-900 dark:text-white">
                       {guide.title}
                     </h2>
-                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1">
+                    <p className="text-sm sm:text-sm text-slate-700 dark:text-slate-300 mt-1">
                       {guide.fetalHighlightsSummary}
                     </p>
                   </div>
@@ -825,14 +825,14 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                           <span className="font-bold text-xs text-emerald-950 dark:text-emerald-300">
                             {nut.name}
                           </span>
-                          <span className="text-[10px] font-black px-2 py-0.5 bg-emerald-200 dark:bg-emerald-900/60 text-emerald-900 dark:text-emerald-200 rounded-full">
+                          <span className="text-xs font-black px-2 py-0.5 bg-emerald-200 dark:bg-emerald-900/60 text-emerald-900 dark:text-emerald-200 rounded-full">
                             {nut.recommendedDaily}
                           </span>
                         </div>
-                        <p className="text-[11px] text-slate-600 dark:text-slate-300">
+                        <p className="text-sm text-slate-700 dark:text-slate-200">
                           {nut.importance}
                         </p>
-                        <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                        <div className="text-xs text-slate-700 dark:text-slate-300">
                           <strong>Fuentes:</strong> {nut.foodSources.join(', ')}
                         </div>
                       </div>
@@ -856,10 +856,10 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                           <span className="w-2 h-2 rounded-full bg-rose-500 shrink-0" />
                           <span>{item.food}</span>
                         </div>
-                        <div className="sm:col-span-4 text-slate-600 dark:text-slate-400 text-[11px]">
+                        <div className="sm:col-span-4 text-slate-700 dark:text-slate-300 text-xs">
                           <strong>Riesgo:</strong> {item.reason}
                         </div>
-                        <div className="sm:col-span-4 text-emerald-800 dark:text-emerald-300 text-[11px] font-semibold">
+                        <div className="sm:col-span-4 text-emerald-800 dark:text-emerald-300 text-xs font-semibold">
                           <strong>Alternativa:</strong> {item.safeAlternative}
                         </div>
                       </div>
@@ -881,11 +881,11 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                       >
                         <div className="flex items-center justify-between font-bold text-cyan-950 dark:text-cyan-200">
                           <span>{app.name}</span>
-                          <span className="text-[10px] bg-cyan-200 dark:bg-cyan-900/60 text-cyan-900 dark:text-cyan-200 px-2 py-0.5 rounded-full">
+                          <span className="text-xs bg-cyan-200 dark:bg-cyan-900/60 text-cyan-900 dark:text-cyan-200 px-2 py-0.5 rounded-full">
                             {app.timeframe}
                           </span>
                         </div>
-                        <p className="text-slate-600 dark:text-slate-300 text-[11px]">
+                        <p className="text-slate-700 dark:text-slate-200 text-sm">
                           {app.purpose}
                         </p>
                       </div>
@@ -932,7 +932,7 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                 <h3 className="text-lg font-black text-slate-900 dark:text-white">
                   Registro de Vitalidad Fetal
                 </h3>
-                <p className="text-xs text-slate-600 dark:text-slate-400">
+                <p className="text-sm text-slate-700 dark:text-slate-300">
                   Recomendado a partir de la semana 28. Túmbate de lado izquierdo tras comer y cuenta 10 movimientos (patadas, giros o roces).
                 </p>
               </div>
@@ -952,7 +952,7 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                   <div className="text-xs font-mono font-bold text-slate-700 dark:text-slate-300">
                     ⏱️ Tiempo transcurrido: {Math.floor(kickTimerSeconds / 60)}m {kickTimerSeconds % 60}s
                   </div>
-                  <div className="text-[11px] text-slate-500">
+                  <div className="text-xs text-slate-500">
                     {kicksCount >= 10
                       ? '🎉 ¡Meta alcanzada! 10 movimientos completados.'
                       : `${10 - kicksCount} movimientos restantes para completar la sesión.`}
@@ -980,10 +980,10 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                         key={k.id}
                         className="flex items-center justify-between text-xs p-2 bg-slate-50 dark:bg-slate-800/60 rounded-xl"
                       >
-                        <span className="text-slate-600 dark:text-slate-300">
+                        <span className="text-slate-700 dark:text-slate-200">
                           {k.timestamp} - {k.kicksCount} movs en {k.durationMinutes} min
                         </span>
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                        <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
                           Óptimo
                         </span>
                       </div>
@@ -1006,7 +1006,7 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                 <h3 className="text-lg font-black text-slate-900 dark:text-white">
                   Monitor de Dinámica Uterina
                 </h3>
-                <p className="text-xs text-slate-600 dark:text-slate-400">
+                <p className="text-sm text-slate-700 dark:text-slate-300">
                   Presiona al empezar la contracción y vuelve a presionar cuando termine el dolor. Calcularemos la duración y el intervalo entre olas.
                 </p>
               </div>
@@ -1030,7 +1030,7 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                   </span>
                 </button>
 
-                <div className="text-center text-xs text-slate-600 dark:text-slate-400">
+                <div className="text-center text-xs text-slate-700 dark:text-slate-300">
                   {isContractionActive ? (
                     <span className="text-rose-600 dark:text-rose-400 font-bold animate-pulse">
                       ¡Contracción en curso! Respira hondo y exhala despacio...
@@ -1071,11 +1071,11 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                         <span className="text-slate-700 dark:text-slate-300 font-medium">
                           Duración: <strong>{c.durationSeconds}s</strong>
                         </span>
-                        <span className="text-slate-500 text-[11px]">
+                        <span className="text-slate-500 text-xs">
                           Intervalo: {c.intervalMinutes > 0 ? `${c.intervalMinutes} min` : 'Primer registro'}
                         </span>
                         <span
-                          className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                          className={`text-xs font-bold px-2 py-0.5 rounded-full ${
                             c.intensity === 'fuerte'
                               ? 'bg-rose-100 text-rose-800'
                               : 'bg-purple-100 text-purple-800'
@@ -1102,7 +1102,7 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                 <h3 className="text-lg font-black text-slate-900 dark:text-white">
                   Maleta para el Hospital y Nacimiento
                 </h3>
-                <p className="text-xs text-slate-600 dark:text-slate-400">
+                <p className="text-sm text-slate-700 dark:text-slate-300">
                   Prepárala entre las semanas 34 y 36. Marca los elementos listos para no olvidar nada esencial.
                 </p>
               </div>
@@ -1113,7 +1113,7 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                   <span className="text-xs font-bold text-slate-700 dark:text-slate-300 block">
                     {checkedCount} de {bagItems.length} listos
                   </span>
-                  <span className="text-[11px] text-slate-500">Progreso de la maleta</span>
+                  <span className="text-xs text-slate-500">Progreso de la maleta</span>
                 </div>
                 <div className="w-12 h-12 rounded-full border-4 border-amber-400 flex items-center justify-center text-xs font-black text-amber-700 dark:text-amber-300">
                   {bagProgressPct}%
@@ -1176,12 +1176,12 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                           {item.label}
                         </span>
                         {item.essential && (
-                          <span className="text-[9px] font-black uppercase px-1.5 py-0.2 bg-rose-100 text-rose-800 rounded">
+                          <span className="text-xs font-black uppercase px-1.5 py-0.2 bg-rose-100 text-rose-800 rounded">
                             Esencial
                           </span>
                         )}
                       </div>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                      <p className="text-sm text-slate-700 dark:text-slate-300 mt-0.5">
                         {item.description}
                       </p>
                     </div>
@@ -1245,7 +1245,7 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
               <h2 className="text-xl font-black text-slate-900 dark:text-white">
                 Guía de Alivio Seguro para Molestias Gestacionales
               </h2>
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1">
+              <p className="text-sm sm:text-sm text-slate-700 dark:text-slate-300 mt-1">
                 Estrategias avaladas por evidencia médica para náuseas, acidez, lumbalgia, contracciones de Braxton Hicks y retención de líquidos.
               </p>
             </div>
@@ -1267,11 +1267,11 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                           <span className="font-black text-sm text-slate-900 dark:text-white">
                             {symptom.symptomName}
                           </span>
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-pink-100 dark:bg-pink-900/60 text-pink-800 dark:text-pink-200">
+                          <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-pink-100 dark:bg-pink-900/60 text-pink-800 dark:text-white">
                             Trimestres: {symptom.trimesters.join(', ')}°
                           </span>
                         </div>
-                        <p className="text-xs text-slate-600 dark:text-slate-400">
+                        <p className="text-sm text-slate-700 dark:text-slate-300">
                           {symptom.description}
                         </p>
                       </div>
@@ -1316,12 +1316,12 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                         </div>
 
                         <div className="p-3 bg-rose-50 dark:bg-rose-950/40 rounded-xl border border-rose-100 dark:border-rose-900/50 space-y-1">
-                          <span className="font-bold text-rose-900 dark:text-rose-200 flex items-center gap-1 text-[11px]">
+                          <span className="font-bold text-rose-900 dark:text-rose-200 flex items-center gap-1 text-xs">
                             <AlertTriangle className="w-3.5 h-3.5 text-rose-600" />
                             <span>Cuándo no es normal y debes consultar:</span>
                           </span>
                           {symptom.medicalRedFlags.map((flag, idx) => (
-                            <p key={idx} className="text-rose-800 dark:text-rose-300 text-[11px] pl-4">
+                            <p key={idx} className="text-rose-800 dark:text-rose-300 text-sm pl-4">
                               • {flag}
                             </p>
                           ))}
@@ -1341,15 +1341,15 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
       {/* ======================================================== */}
       {activeTab === 'alarmas' && (
         <div className="space-y-4">
-          <div className="bg-gradient-to-r from-rose-900 to-red-900 text-white rounded-3xl p-6 shadow-md space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20 rounded-full text-xs font-bold uppercase tracking-wider">
+          <div className="preg-on-dark bg-gradient-to-r from-rose-900 to-red-900 text-white rounded-3xl p-6 shadow-md space-y-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-black/30 rounded-full text-xs font-bold uppercase tracking-wider">
               <AlertTriangle className="w-3.5 h-3.5 text-amber-300" />
               <span>Protocolo de Triaje Obstétrico de Emergencia (ACOG / OMS)</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-black">
               Signos que Requieren Evaluación Médica Inmediata
             </h2>
-            <p className="text-rose-100 text-xs sm:text-sm max-w-2xl">
+            <p className="text-white text-sm sm:text-base max-w-2xl">
               Si experimentas cualquiera de estos síntomas, no esperes a tu próxima cita. Acude al servicio de urgencias obstétricas o maternidad más cercano.
             </p>
           </div>
@@ -1363,7 +1363,7 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span
-                      className={`text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full ${
+                      className={`text-xs font-black uppercase px-2.5 py-0.5 rounded-full ${
                         flag.severity === 'urgente'
                           ? 'bg-red-600 text-white animate-pulse'
                           : 'bg-amber-500 text-slate-950'
@@ -1389,7 +1389,7 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                     {flag.symptom}
                   </h3>
 
-                  <p className="text-xs text-slate-600 dark:text-slate-400">
+                  <p className="text-sm text-slate-700 dark:text-slate-300">
                     <strong>Motivo Médico:</strong> {flag.medicalReason}
                   </p>
                 </div>
@@ -1398,10 +1398,10 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                   <span className="text-xs font-bold text-red-900 dark:text-red-200 block">
                     Acción Recomendada:
                   </span>
-                  <p className="text-xs font-semibold text-red-800 dark:text-red-300">
+                  <p className="text-sm font-semibold text-red-800 dark:text-red-300">
                     {flag.recommendedAction}
                   </p>
-                  <span className="text-[10px] text-slate-400 block pt-1 font-mono">
+                  <span className="text-xs text-slate-400 block pt-1 font-mono">
                     Fuente: {flag.sourceGuideline}
                   </span>
                 </div>
@@ -1425,7 +1425,7 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                 <h3 className="text-base font-black text-slate-900 dark:text-white">
                   Consultorio Obstétrico con Froggi
                 </h3>
-                <p className="text-xs text-slate-500">
+                <p className="text-sm text-slate-500">
                   Orientación con lectura de respuestas por audio en voz natural
                 </p>
               </div>
@@ -1445,14 +1445,14 @@ export const PregnancyCare: React.FC<PregnancyCareProps> = ({ onAddHistoryRecord
                   </div>
                 )}
                 <div
-                  className={`max-w-[82%] p-3.5 rounded-2xl text-xs leading-relaxed space-y-1.5 ${
+                  className={`max-w-[85%] p-3.5 rounded-2xl text-sm leading-relaxed space-y-1.5 ${
                     msg.sender === 'user'
                       ? 'bg-rose-600 text-white rounded-br-none'
                       : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-bl-none border border-slate-200 dark:border-slate-700'
                   }`}
                 >
                   <p className="whitespace-pre-line">{msg.text}</p>
-                  <div className="flex items-center justify-between text-[10px] opacity-75 pt-1">
+                  <div className="flex items-center justify-between text-xs opacity-90 pt-1">
                     <span>{msg.time}</span>
                     {msg.sender === 'froggi' && (
                       <button

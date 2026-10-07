@@ -573,50 +573,6 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Home Brand Image
---------------------------------------------------------------*/
-.home-brand-hero {
-  padding: 0;
-  background: #fff;
-}
-
-.home-brand-hero img {
-  display: block;
-  width: 100%;
-  height: clamp(220px, 43vw, 640px);
-  margin: 0 auto;
-  object-fit: cover;
-  object-position: center;
-}
-
-.home-tagline {
-  padding: 8px 16px 20px;
-  background: #fff;
-}
-
-.home-tagline img {
-  display: block;
-  width: 100%;
-  max-width: 1280px;
-  height: auto;
-  margin: 0 auto;
-}
-
-#main > .about {
-  padding-top: 32px;
-}
-
-.home-ai-cta {
-  margin-bottom: 64px;
-}
-
-@media (max-width: 575px) {
-  .home-ai-cta {
-    margin-bottom: 40px;
-  }
-}
-
-/*--------------------------------------------------------------
 # Featured Amigos-mas Section
 --------------------------------------------------------------*/
 .featured-Amigos-mas .Amigos-mas-item {
@@ -816,18 +772,7 @@ section {
 }
 
 .Amigos-mas .card .card-img img {
-  display: block;
-  width: 100%;
-  height: 260px;
-  object-fit: cover;
-  object-position: center;
   transition: 0.3s ease-in-out;
-}
-
-@media (max-width: 575px) {
-  .Amigos-mas .card .card-img img {
-    height: 220px;
-  }
 }
 
 .Amigos-mas .card h3 {

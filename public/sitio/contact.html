@@ -6,8 +6,8 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>Amigos Unidos - Contáctanos</title>
-  <meta content="Contacta a Amigos Unidos para consultas y comentarios sobre Froggi y nuestras herramientas de inteligencia artificial para familias." name="description">
-  <meta content="Amigos Unidos, contacto, Froggi, inteligencia artificial familiar, soporte IA" name="keywords">
+  <meta content="Contacta a Amigos Unidos para resolver dudas o compartir comentarios sobre nuestros recursos educativos e IA Ayudante." name="description">
+  <meta content="Amigos Unidos, contacto, IA Ayudante, recursos educativos, preguntas y sugerencias" name="keywords">
 
   <link href="assets/img/Logo2.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -58,7 +58,7 @@
         <div class="container position-relative">
           <div class="row d-flex justify-content-center">
             <div class="col-lg-6 text-center">
-              <h2>Contacto sobre IA Ayudante</h2>
+              <h2>Contáctanos</h2>
               <p>
                 ¿Tienes preguntas, ideas o sugerencias? Estamos aquí para escucharte.
                 Escríbenos y nos pondremos en contacto contigo.
@@ -122,12 +122,7 @@
 
           <div class="col-lg-8">
 
-            <form id="contact-form" method="post" role="form" class="php-email-form">
-
-              <div aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden;">
-                <label for="website">No completar</label>
-                <input type="text" name="website" id="website" tabindex="-1" autocomplete="off">
-              </div>
+            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
 
               <div class="row">
 
@@ -135,7 +130,6 @@
                   <input
                     type="text"
                     name="name"
-                    maxlength="100"
                     class="form-control"
                     id="name"
                     placeholder="Tu nombre"
@@ -147,7 +141,6 @@
                     type="email"
                     class="form-control"
                     name="email"
-                    maxlength="254"
                     id="email"
                     placeholder="Tu correo electrónico"
                     required>
@@ -160,7 +153,6 @@
                   type="text"
                   class="form-control"
                   name="subject"
-                  maxlength="160"
                   id="subject"
                   placeholder="Asunto"
                   required>
@@ -171,16 +163,8 @@
                   class="form-control"
                   name="message"
                   rows="5"
-                  maxlength="3000"
                   placeholder="Escribe tu mensaje"
                   required></textarea>
-              </div>
-
-              <div class="form-group mt-3">
-                <label class="d-flex align-items-start gap-2">
-                  <input type="checkbox" name="consent" value="true" required>
-                  <span>Autorizo el uso de mis datos para responder este mensaje.</span>
-                </label>
               </div>
 
               <div class="my-3">
@@ -258,14 +242,14 @@
 
         <div class="col-lg-2 col-6 footer-links">
 
-          <h4>Herramientas de IA</h4>
+          <h4>Nuestros Servicios</h4>
 
           <ul>
-            <li><a href="/ia-ayudante/">IA Ayudante</a></li>
-            <li><a href="/ia-ayudante/">IA conversacional</a></li>
-            <li><a href="/ia-ayudante/">Seguimiento familiar</a></li>
-            <li><a href="/ia-ayudante/">Recursos por etapa</a></li>
-            <li><a href="/ia-ayudante/">Zona Niños con Froggi</a></li>
+            <li><a href="servicios.html">Diseño Web</a></li>
+            <li><a href="servicios.html">Desarrollo Web</a></li>
+            <li><a href="servicios.html">Gestión de Productos</a></li>
+            <li><a href="servicios.html">Marketing</a></li>
+            <li><a href="servicios.html">Diseño Gráfico</a></li>
           </ul>
 
         </div>
@@ -305,50 +289,7 @@
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
-  <script>
-    (() => {
-      const form = document.getElementById('contact-form');
-      if (!form) return;
-      const loading = form.querySelector('.loading');
-      const error = form.querySelector('.error-message');
-      const sent = form.querySelector('.sent-message');
-
-      form.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        loading.classList.add('d-block');
-        error.classList.remove('d-block');
-        sent.classList.remove('d-block');
-        const values = new FormData(form);
-
-        try {
-          const response = await fetch('/api/public/contact', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              name: values.get('name'),
-              email: values.get('email'),
-              subject: values.get('subject'),
-              message: values.get('message'),
-              website: values.get('website'),
-              consent: values.get('consent') === 'true'
-            })
-          });
-          const result = await response.json();
-          if (!response.ok || !result.success) throw new Error(result.error || 'No pudimos enviar tu mensaje.');
-          sent.textContent = result.message;
-          sent.classList.add('d-block');
-          form.reset();
-        } catch (submitError) {
-          error.textContent = submitError instanceof Error ? submitError.message : 'Error de conexión. Inténtalo de nuevo.';
-          error.classList.add('d-block');
-        } finally {
-          loading.classList.remove('d-block');
-        }
-      });
-    })();
-  </script>
-
-  <script src="assets/js/site-footer.js?v=20260930"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
 
   <script src="assets/js/main.js?v=home-20260930"></script>
 

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useFamily } from '../context/FamilyContext';
 import { useTheme } from '../context/ThemeContext';
 import { FroggiAvatar } from './MascotSVGs';
-import { PricingPlans } from './PricingPlans';
 import { PlatformRole } from '../types';
 import { AnimatedRainbowCloud } from './AnimatedRainbowCloud';
 import {
@@ -35,8 +34,7 @@ import {
   Check,
   Shield,
   BookOpen,
-  Home,
-  CreditCard
+  Home
 } from 'lucide-react';
 
 interface LandingHomeProps {
@@ -185,9 +183,7 @@ export const LandingHome: React.FC<LandingHomeProps> = ({ onNavigateToRoleView }
           {/* Center: Logo Branding */}
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-amber-100 border border-amber-300 flex items-center justify-center p-1 shadow-2xs">
-              <a href="/" aria-label="Volver a la web principal de Amigos Unidos" title="Volver a la web principal" className="inline-flex rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-600">
-                <FroggiAvatar size="sm" expression="happy" />
-              </a>
+              <FroggiAvatar size="sm" expression="happy" />
             </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5">
@@ -357,18 +353,6 @@ export const LandingHome: React.FC<LandingHomeProps> = ({ onNavigateToRoleView }
                     <p className="text-[11px] text-slate-500 font-normal">
                       Cifrado PBKDF2/SHA-512 sin coste
                     </p>
-                  </div>
-                </a>
-
-                <a
-                  href="#planes"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="p-3 rounded-2xl hover:bg-amber-50 flex items-center gap-3 text-slate-800 transition-colors border border-transparent hover:border-amber-200/60"
-                >
-                  <CreditCard className="w-4 h-4 text-amber-700 shrink-0" />
-                  <div>
-                    <p className="font-bold text-amber-950">Planes de IA</p>
-                    <p className="text-[11px] text-slate-500 font-normal">Solicitud de demostración sin cobro</p>
                   </div>
                 </a>
               </div>
@@ -554,10 +538,6 @@ export const LandingHome: React.FC<LandingHomeProps> = ({ onNavigateToRoleView }
             Nuestros árboles de decisión y algoritmos están fundamentados en los manuales pediátricos oficiales de la <strong>Organización Mundial de la Salud (OMS)</strong>, la <strong>Academia Americana de Pediatría (AAP)</strong> y <strong>UNICEF</strong>.
           </p>
         </div>
-      </section>
-
-      <section id="planes" className="w-full border-y border-amber-200 bg-[#FFFDF9] py-8 scroll-mt-16">
-        <PricingPlans />
       </section>
 
       {/* ---------------------------------------------------- */}
